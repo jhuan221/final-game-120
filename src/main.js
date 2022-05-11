@@ -15,8 +15,13 @@ let config = {
         }
     },
     scene: [
-        World,
+        Menu,
+        World
     ]
 }
 
 let game = new Phaser.Game(config);
+
+// init key for menu
+
+let keySp;
