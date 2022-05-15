@@ -5,6 +5,9 @@ let config = {
     width: 1280,
     height: 720,
     scene: [
+        S_Overview,
+        S_Minigame
+        
     ]
 }
 
