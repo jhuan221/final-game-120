@@ -5,7 +5,7 @@ class S_Minigame extends Phaser.Scene {
     }
 
     preload(){
-        // water [hold spacebar] game sprite
+        // water [hold spacebar] game sprites
         this.load.image('water', './assets/drink/water.png');
         this.load.image('water2', './assets/drink/drinking.jpg');
         this.load.image('water3', './assets/drink/almostthere.jpg')
