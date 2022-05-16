@@ -5,6 +5,6 @@ class S_ExternalView extends Phaser.Scene {
     }
 
     preload() {
-        
     }
+  
 }

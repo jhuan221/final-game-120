@@ -7,6 +7,9 @@ class S_Minigame extends Phaser.Scene {
     preload(){
         // water [hold spacebar] game sprite
         this.load.image('water', './assets/drink/water.png');
+        this.load.image('water2', './assets/drink/drinking.jpg');
+        this.load.image('water3', './assets/drink/almostthere.jpg')
+        this.load.image('empty', './assets/drink/empty.png');
     }
     create() {
         this.add.text(game.config.width/2, game.config.height/2, 'MINI-GAME');
@@ -15,7 +18,18 @@ class S_Minigame extends Phaser.Scene {
 
         // water [hold spacebar] minigame variables
         // sprite, keybind, timer 
-        this.add.sprite (game.config.width/2, game.config.height/2, 'water');
+       this.fullglass = this.add.sprite (game.config.width/2, game.config.height/2, 'water');
+       
+        //temp anim (flipping through the different images currently)
+        this.drinking = this.add.sprite (game.config.width/2, game.config.height/2, 'water2');
+        this.halfway = this.add.sprite (game.config.width/2, game.config.height/2, 'water3');
+        this.emptyglass = this.add.sprite (game.config.width/2, game.config.height/2, 'empty');
+
+        // visibility off
+        this.drinking.visible = false;
+        this.halfway.visible = false;
+        this.emptyglass.visible = false;
+
         keySp = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.drinkCounter = 0;
         this.drinkTimer = this.time.addEvent({
@@ -24,8 +38,19 @@ class S_Minigame extends Phaser.Scene {
                 this.drinkCounter += 1;
                 if (this.drinkCounter % 3 == 0){
                     console.log("change frame");
+                    this.fullglass.visible = false;
+                    if (this.drinkCounter == 3 ){
+                        this.drinking.visible = true;
+                    }
+                    else if(this.drinkCounter == 6){
+                        this.halfway.visible = true;
+            
+                    }
+                    else if (this.drinkCounter == 9){
+                        this.emptyglass.visible = true;
+                    }
                 }
-                if (this.drinkCounter == 11){
+                if (this.drinkCounter == 10){
                     console.log("stop");
                     this.time.paused = true;
                     this.done = true;
