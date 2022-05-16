@@ -22,7 +22,7 @@ class S_Overview extends Phaser.Scene {
             this.scene.sleep('s_overview').start('s_minigame');
         }, this);
 
-        
+        // this.counter = 1;
         // this.testTimer = this.time.addEvent({
         //     callback: () => {
         //         console.log('Count: ' + this.counter);

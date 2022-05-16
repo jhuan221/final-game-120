@@ -13,6 +13,6 @@ let config = {
 
 let game = new Phaser.Game(config);
 
-// init key for menu
+let keySp;
 
 
