@@ -25,11 +25,11 @@ class S_Minigame extends Phaser.Scene {
         this.halfway = this.add.sprite (game.config.width/2, game.config.height/2, 'water3');
         this.emptyglass = this.add.sprite (game.config.width/2, game.config.height/2, 'empty');
 
-        // visibility off
+        //init the other images visibility to false
         this.drinking.visible = false;
         this.halfway.visible = false;
         this.emptyglass.visible = false;
-
+        
         keySp = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.drinkCounter = 0;
         this.drinkTimer = this.time.addEvent({

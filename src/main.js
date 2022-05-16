@@ -5,6 +5,7 @@ let config = {
     width: 1280,
     height: 720,
     scene: [
+        Menu,
         S_Overview,
         S_Minigame
         
@@ -13,6 +14,6 @@ let config = {
 
 let game = new Phaser.Game(config);
 
-let keySp;
+let keySp, keyEnter;
 
 
