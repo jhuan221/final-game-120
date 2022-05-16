@@ -46,11 +46,12 @@ class S_Minigame extends Phaser.Scene {
                         this.halfway.visible = true;
             
                     }
-                    else if (this.drinkCounter == 9){
-                        this.emptyglass.visible = true;
-                    }
+                    // else if (this.drinkCounter == 9){
+                    //     this.emptyglass.visible = true;
+                    // }
                 }
                 if (this.drinkCounter == 10){
+                    this.emptyglass.visible = true;
                     console.log("stop");
                     this.time.paused = true;
                     this.done = true;
