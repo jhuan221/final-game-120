@@ -25,8 +25,8 @@ class S_Overview extends Phaser.Scene {
             .setScale(0.5,0.5)
             .setInteractive({ useHandCursor: true })
             .on('pointerdown', () => { 
-            this.scene.sleep('s_overview').start('s_minigame');
-        }, this);
+                this.scene.sleep('s_overview').start('s_minigame');
+            }, this);
 
         // this.counter = 1;
         // this.testTimer = this.time.addEvent({
