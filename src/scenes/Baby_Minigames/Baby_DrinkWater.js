@@ -1,7 +1,7 @@
 
-class S_Minigame extends Phaser.Scene {
+class Baby_DrinkWater extends Phaser.Scene {
     constructor() {
-        super('s_minigame');
+        super('baby_drinkwater');
     }
 
     preload(){
@@ -68,12 +68,12 @@ class S_Minigame extends Phaser.Scene {
 
     update() {
         if (Phaser.Input.Keyboard.JustDown(this.keyESC)) {
-            this.scene.stop('s_minigame').start('s_overview');
+            this.scene.stop('baby_drinkwater').start('s_overview');
         }
         // water [hold spacebar] functionality
         this.drinkWater(this.drinkTimer);
         if (this.done){
-            this.scene.stop('s_minigame').start('s_overview');
+            this.scene.stop('baby_drinkwater').start('s_overview');
         }
     }
 
