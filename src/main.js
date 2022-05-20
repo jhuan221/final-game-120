@@ -15,7 +15,8 @@ let config = {
         }
     },
     scene: [
-        Baby_Eating
+        Baby_Sleeping
+        //Baby_Eating
         //Baby_Cry
         // Menu,
         // S_Overview,
