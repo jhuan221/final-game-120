@@ -7,6 +7,7 @@ class Baby_Eating extends Phaser.Scene {
         this.PLAYER_MAX_Y = 300;
         this.PLAYER_START_X = game.config.width/4;
         this.PLAYER_START_Y = game.config.height/3;
+
     }
 
     preload() {
@@ -40,34 +41,41 @@ class Baby_Eating extends Phaser.Scene {
 
 
         // SPAWN WALLS
+        this.topHalf = true;
         this.wallSpawnInterval = this.time.addEvent({
+            args: [ 
+                this.topHalf
+            ],
             callback: () => {
+                let wallPosition = this.topHalf ? Phaser.Math.Between(game.config.height/10, (4*game.config.height)/10)
+                                                : Phaser.Math.Between((6*game.config.height)/10, (9*game.config.height)/10);
                 let wall = this.physics.add.sprite(
                     game.config.width + 10, 
-                    Phaser.Math.Between(0, game.config.height),
+                    wallPosition,
                     'wall'
                 )
                 .setOrigin(0.5,0.5)
-                .setScale(1, Phaser.Math.Between(3,10));
+                .setScale(1, Phaser.Math.Between(5,10));
                 wall.body.immovable = true;
                 wall.body.allowGravity = false;
                 wall.setVelocityX(-this.scrollspeed);
                 this.physics.add.collider(wall, this.player);
+                this.topHalf = !this.topHalf;
             },
             callbackScope: this,
-            delay: 1500,
+            delay: 1700,
             startAt: 1,
             loop: true
         });
 
         // WALL SCROLL SPEED TIMER
-        this.wallSpeedInterval = this.time.addEvent({
-            callback: () => {
-                this.scrollspeed += 50;
-            },
-            callbackScope: this,
-            delay: 30000
-        });
+        // this.wallSpeedInterval = this.time.addEvent({
+        //     callback: () => {
+        //         this.scrollspeed += 50;
+        //     },
+        //     callbackScope: this,
+        //     delay: 30000
+        // });
 
     }
 
