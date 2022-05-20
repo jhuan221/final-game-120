@@ -6,7 +6,7 @@ class Baby_Sleeping extends Phaser.Scene {
         this.SHEEP_START_X = -50;
         this.SHEEP_START_Y = game.config.height-50;
         this.SHEEP_MAXACC_Y = -600;
-        this.FENCE_START_X = 2*game.config.width/3;
+        this.FENCE_START_X = (2*game.config.width)/3;
         this.CHARGE_THRESHOLD = 600;
 
     }
