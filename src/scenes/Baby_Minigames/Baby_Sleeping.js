@@ -41,7 +41,6 @@ class Baby_Sleeping extends Phaser.Scene {
         this.isCharging = false;
         this.isJump = false;
         this.jumpStartTime;
-        this.highestJump = 0;
 
         // TIMER CONFIGS
         this.failConfig = {
