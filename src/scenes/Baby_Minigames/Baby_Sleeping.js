@@ -52,8 +52,6 @@ class Baby_Sleeping extends Phaser.Scene {
             },
             delay: 500
         };
-
-        // HIGHEST JUMP: 645
     }
 
     update() {
