@@ -20,7 +20,7 @@ class Baby_Sleeping extends Phaser.Scene {
     create() {
         // SCENE SETUP
         this.keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
-        this.keySPC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        this.keySPC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE); // HOLD SPACEBAR TO CHARGE JUMP / LONGER CHARGE = HIGHER JUMP
 
         // GAME OBJECTS
         this.sheep = this.physics.add.sprite(this.SHEEP_START_X, this.SHEEP_START_Y, 'sheep').setOrigin(0,1);
