@@ -4,17 +4,19 @@ class S_Sleeping extends Phaser.Scene {
         super('s_sleeping');
 
         this.SHEEP_START_X = -50;
-        this.SHEEP_START_Y = game.config.height-50;
-        this.SHEEP_MAXACC_Y = -600;
+        this.SHEEP_START_Y = game.config.height-200;
+        this.SHEEP_MAXACC_Y = -525;
         this.FENCE_START_X = (2*game.config.width)/3;
         this.CHARGE_THRESHOLD = 600;
 
     }
 
     preload() {
-        this.load.image('sheep', './assets/test/test-player.png'); // 50 x 50
-        this.load.image('ground', './assets/test/test-baby-sleeping/sheep-ground.png'); // 1280 x 50
-        this.load.image('fence', './assets/test/test-baby-sleeping/test-fence.png'); // 25 x 250
+        this.load.image('curtains', './assets/Sleep/Curtains.png');
+        this.load.image('nightsky', './assets/Sleep/Night_Sky.png');
+        this.load.image('sheep', './assets/Sleep/Sheep.png');
+        this.load.image('ground', './assets/Sleep/Ground.png');
+        this.load.image('fence', './assets/Sleep/Fence.png');
     }
 
     create() {
@@ -23,10 +25,12 @@ class S_Sleeping extends Phaser.Scene {
         this.keySPC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE); // HOLD SPACEBAR TO CHARGE JUMP / LONGER CHARGE = HIGHER JUMP
 
         // GAME OBJECTS
-        this.sheep = this.physics.add.sprite(this.SHEEP_START_X, this.SHEEP_START_Y, 'sheep').setOrigin(0,1);
+        this.nightsky = this.add.sprite(0, 0, 'nightsky').setOrigin(0,0);
+        this.curtains = this.add.sprite(0, 0, 'curtains').setOrigin(0,0);
+        this.sheep = this.physics.add.sprite(this.SHEEP_START_X, this.SHEEP_START_Y, 'sheep').setOrigin(0,1).setScale(0.5,0.5);
         this.sheep.setVelocityX(100,0);
         this.sheep.setGravity(0,300);
-        this.fence = this.physics.add.sprite(this.FENCE_START_X, game.config.height-50, 'fence').setOrigin(0.5,1);
+        this.fence = this.physics.add.sprite(this.FENCE_START_X, game.config.height-100, 'fence').setOrigin(0.5,1);
         this.fence.body.immovable = true;
         this.fence.body.allowGravity = false;
         this.ground = this.physics.add.sprite(game.config.width/2, game.config.height, 'ground').setOrigin(0.5,1);

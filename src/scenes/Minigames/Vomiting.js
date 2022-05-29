@@ -5,7 +5,7 @@ class S_Vomiting extends Phaser.Scene {
     }
 
     preload() {
-
+        
     }
 
     create() {
