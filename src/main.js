@@ -15,12 +15,13 @@ let config = {
         }
     },
     scene: [
-        Baby_Sleeping
+        //Baby_Sleeping
         //Baby_Eating
         //Baby_Cry
         // Menu,
         // S_Overview,
         // Baby_DrinkWater
+        Game_Over
         
     ]
 }
