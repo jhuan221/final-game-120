@@ -10,7 +10,7 @@ class Game_Over extends Phaser.Scene {
     preload() {
         // loading assets for the game over sequence 
         this.load.spritesheet('end', './assets/game_over/game_over_sheet.png', {frameWidth: 912,
-            frameHeight: 570, startFrame: 0, endFrame: 14});
+            frameHeight: 565, startFrame: 0, endFrame: 14});
         this.load.image('bkgrd', './assets/game_over/borders.png');
         this.load.image('black', './assets/game_over/black.png');
         this.load.audio('sfx_slowdown', './assets/game_over/ekg_flatlining.wav', {volume:0.2});
