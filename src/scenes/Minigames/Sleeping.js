@@ -1,5 +1,5 @@
 
-class S_Sleeping extends Phaser.Scene {
+class Sleeping extends Phaser.Scene {
     constructor() {
         super('s_sleeping');
 

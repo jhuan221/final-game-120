@@ -15,13 +15,15 @@ let config = {
         }
     },
     scene: [
-        S_Eating,
-        S_Sleeping    
+        Relax,
+        Vomiting,
+        Eating,
+        Sleeping    
     ]
 }
 
 let game = new Phaser.Game(config);
 
-let keySp, keyEnter;
+let keyLt, keyRt, keyUp, keyDn, keySp, keyEnter;
 
 

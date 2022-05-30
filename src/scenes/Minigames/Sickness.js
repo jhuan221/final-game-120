@@ -1,5 +1,5 @@
 
-class S_Sickness extends Phaser.Scene {
+class Sickness extends Phaser.Scene {
     constructor() {
         super('s_sickness');
     }

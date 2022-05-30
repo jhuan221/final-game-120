@@ -1,5 +1,5 @@
 
-class S_DrinkWater extends Phaser.Scene {
+class DrinkWater extends Phaser.Scene {
     constructor() {
         super('s_drinkwater');
     }

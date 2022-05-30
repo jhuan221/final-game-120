@@ -1,5 +1,5 @@
 
-class S_Eating extends Phaser.Scene {
+class Eating extends Phaser.Scene {
     constructor() {
         super('s_eating');
 
@@ -112,8 +112,14 @@ class S_Eating extends Phaser.Scene {
                 this.player.setVelocityX(0);
         }
 
+        if (this.player.y > game.config.height + this.player.height ||
+            this.player.x < -this.player.width) {
+                this.player.x = this.PLAYER_START_X;
+                this.player.y = this.PLAYER_START_Y;
+        }
+
         if (Phaser.Input.Keyboard.JustDown(this.keyESC)) {
-            this.scene.stop('baby_eating').start('s_overview');
+            this.scene.stop('s_eating').start('s_overview');
         }
     }
 }
