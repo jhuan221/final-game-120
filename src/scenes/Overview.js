@@ -25,7 +25,7 @@ class Overview extends Phaser.Scene {
             .setScale(0.5,0.5)
             .setInteractive({ useHandCursor: true })
             .on('pointerdown', () => { 
-                this.scene.sleep('s_overview').start('baby_drinkwater');
+                this.scene.sleep('s_overview').start('s_drinkwater');
             }, this);
 
         // this.counter = 1;

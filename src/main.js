@@ -15,8 +15,9 @@ let config = {
         }
     },
     scene: [
-        Relax,
-        Vomiting,
+        Sickness,
+        //Relax,
+        //Vomiting,
         Eating,
         Sleeping    
     ]

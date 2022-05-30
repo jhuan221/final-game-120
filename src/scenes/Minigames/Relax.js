@@ -119,28 +119,35 @@ class Relax extends Phaser.Scene {
                         Phaser.Input.Keyboard.JustDown(keyLt)) {
                             this.arrowArray[i].obj.visible = false;
                             this.arrowArray.splice(i, 1);
+                            this.score += 1;
                     }
 
                     if (this.arrowArray[i].id == 'rightArrow' &&
                         Phaser.Input.Keyboard.JustDown(keyRt)) {
                             this.arrowArray[i].obj.visible = false;
                             this.arrowArray.splice(i, 1);
+                            this.score += 1;
                     }
 
                     if (this.arrowArray[i].id == 'upArrow' && 
                         Phaser.Input.Keyboard.JustDown(keyUp)) {
                             this.arrowArray[i].obj.visible = false;
                             this.arrowArray.splice(i, 1);
+                            this.score += 1;
                     }
 
                     if (this.arrowArray[i].id == 'downArrow' &&
                         Phaser.Input.Keyboard.JustDown(keyDn)) {
                             this.arrowArray[i].obj.visible = false;
                             this.arrowArray.splice(i, 1);
+                            this.score += 1;
                     }
             }
-
         }
         
+
+        if (this.score >= 30) {
+            console.log("complete");
+        }
     }
 }
