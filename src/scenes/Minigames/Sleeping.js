@@ -15,14 +15,6 @@ class Sleeping extends Phaser.Scene {
         // INSTRUCTIONS
         this.load.image('title-text', './assets/Sleep/Sleep_Instructions/Sleep_Text.png');
         this.load.image('instructionBG', './assets/Sleep/Sleep_Instructions/Instruction_Background.png');
-        // this.load.spritesheet({
-        //     key: 'arrows-sheet',
-        //     url: './assets/Relax/Relax_Instructions/Relax_Key_Sheet.png',
-        //     frameConfig: {
-        //         frameWidth: 304,
-        //         frameHeight: 230
-        //     }
-        // });
         this.load.spritesheet({
             key: 'space-sheet',
             url: './assets/Sleep/Sleep_Instructions/Sleep_Space_Sheet.gif',
@@ -37,6 +29,14 @@ class Sleeping extends Phaser.Scene {
         this.load.image('sheep', './assets/Sleep/Sheep.png');
         this.load.image('ground', './assets/Sleep/Ground.png');
         this.load.image('fence', './assets/Sleep/Fence.png');
+        this.load.spritesheet({
+            key: 'sleep-sheet',
+            url: './assets/animations/sleep_anim/sleeping.png',
+            frameConfig: {
+                frameWidth: 120,
+                frameHeight: 85
+            }
+        });
     }
 
     create() {
@@ -83,7 +83,21 @@ class Sleeping extends Phaser.Scene {
             frameRate: 10,
             frames: this.anims.generateFrameNumbers('space-sheet', { start: 0, end: 7 }),
             repeat: -1
-        })
+        });
+
+        this.anims.create({
+            key: 'sleep-anim',
+            frameRate: 3,
+            frames: this.anims.generateFrameNumbers('sleep-sheet', { start: 0, end: 4 }),
+            repeat: -1
+        });
+        this.anim = this.add.sprite(
+            game.config.width,
+            game.config.height,
+            'sleep-sheet',
+            0)
+            .setOrigin(1, 1);
+        this.anim.play('sleep-anim');
 
         // INSTRUCTIONS
         this.instructionBG = this.add.image(game.config.width/2, game.config.height/2, 'instructionBG')

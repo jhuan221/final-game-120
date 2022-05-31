@@ -15,13 +15,13 @@ let config = {
         }
     },
     scene: [
-        Medicine,
-        DrinkWater,
+        //Medicine,
+        //DrinkWater,
         //Sickness,
         //Menu,
         //Relax,
-        //Vomiting,
-        Eating,
+        Vomiting,
+        //Eating,
         Sleeping, 
         Game_Over   
     ]

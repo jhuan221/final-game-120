@@ -32,6 +32,14 @@ class Relax extends Phaser.Scene {
                 frameHeight: 479
             }
         });
+        this.load.spritesheet({
+            key: 'relax-sheet',
+            url: './assets/animations/relax_anim/relax.png',
+            frameConfig: {
+                frameWidth: 120,
+                frameHeight: 85
+            }
+        });
     }
 
     create() {
@@ -121,6 +129,19 @@ class Relax extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers('arrows-sheet', { start: 0, end: 11 }),
             repeat: -1
         })
+        this.anims.create({
+            key: 'relax-anim',
+            frameRate: 3,
+            frames: this.anims.generateFrameNumbers('relax-sheet', { start: 0, end: 4 }),
+            repeat: -1
+        })
+        this.anim = this.add.sprite(
+            game.config.width, 
+            game.config.height, 
+            'relax-sheet', 
+            0)
+            .setOrigin(1, 1);
+        this.anim.play('relax-anim');
 
         // INSTRUCTIONS
         this.instructionBG = this.add.image(game.config.width/2, game.config.height/2, 'instructionBG')

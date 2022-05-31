@@ -37,6 +37,14 @@ class Sickness extends Phaser.Scene {
         this.load.image('text-menu', './assets/Sick/Text_Menu.png');
         this.load.image('w-bloodcell', './assets/Sick/W_Bloodcell.png');
         this.load.image('tempBG', './assets/Sick/tempBackground.png');
+        this.load.spritesheet({
+            key: 'sick-sheet',
+            url: './assets/animations/sick_anim/sick.png',
+            frameConfig: {
+                frameWidth: 120,
+                frameHeight: 85
+            }
+        });
 
         // ATTACK UI        
         this.load.image('attack-text', './assets/Sick/Text/Attack_Name.png');
@@ -83,12 +91,6 @@ class Sickness extends Phaser.Scene {
             'sick-background')
             .setScale(0.9,0.9)
             .setOrigin(0.5,0.5);
-        this.enemyHealth = this.add.sprite(
-            ((2*game.config.width)/5)+20, 
-            (game.config.height/5)-18, 
-            'healthbar-sheet', 0)
-            .setScale(0.9,1)
-            .setOrigin(0.5,0.5);
         this.whiteCell = this.add.sprite(
             this.WHITE_CELL_START_X, 
             game.config.height/2, 
@@ -101,6 +103,12 @@ class Sickness extends Phaser.Scene {
             'enemy-damage-sheet', 
             0)
             .setScale(0.9,0.9)
+            .setOrigin(0.5,0.5);
+        this.enemyHealth = this.add.sprite(
+            ((2*game.config.width)/5)+20, 
+            (game.config.height/5)-18, 
+            'healthbar-sheet', 0)
+            .setScale(0.9,1)
             .setOrigin(0.5,0.5);
         this.baseMenu = this.add.sprite(
             game.config.width/2, 
@@ -246,6 +254,20 @@ class Sickness extends Phaser.Scene {
             repeat: 0
         });
 
+        this.anims.create({
+            key: 'sick-anim',
+            frameRate: 3,
+            frames: this.anims.generateFrameNumbers('sick-sheet', { start: 0, end: 4 }),
+            repeat: -1
+        });
+        this.anim = this.add.sprite(
+            game.config.width,
+            game.config.height, 
+            'sick-sheet', 
+            0)
+            .setOrigin(1, 1);
+        this.anim.play('sick-anim');
+
         // TIME EVENTS
         this.enemyDefeatedEvent = this.time.addEvent({
             callback: () => {
@@ -257,12 +279,29 @@ class Sickness extends Phaser.Scene {
             paused: true
         });
 
+        this.enemyDisappearConfig = {
+            callback: () => {
+                this.enemy.alpha -= 0.1;
+            },
+            delay: 50,
+            loop: true
+        }
+
+        this.enemyDisappearDelayConfig = {
+            callback: () => {
+                this.enemyDisappear = this.time.addEvent(this.enemyDisappearConfig);
+            },
+            delay: 1000,
+            loop: false
+        }
+
         this.dropHealthEvent = this.time.addEvent({
             callback: () => {
                 this.enemy.play('take-damage');
                 this.enemyHealth.play('drop-health');
                 this.superText.visible = true;
                 this.enemyDefeatedEvent.paused = false;
+                this.enemyDead = this.time.addEvent(this.enemyDisappearDelayConfig);
             },
             delay: 1000,
             loop: false,

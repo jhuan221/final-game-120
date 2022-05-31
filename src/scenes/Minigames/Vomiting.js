@@ -26,6 +26,14 @@ class Vomiting extends Phaser.Scene {
                 frameHeight: 800
             }
         });
+        this.load.spritesheet({
+            key: 'vomit-sheet',
+            url: './assets/animations/vomit_anim/vomiting.png',
+            frameConfig: {
+                frameWidth: 120,
+                frameHeight: 85
+            }
+        });
     }
 
     create() {
@@ -42,6 +50,19 @@ class Vomiting extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers('space-sheet', { start: 0, end: 3 }),
             repeat: -1
         })
+        this.anims.create({
+            key: 'vomit-anim',
+            frameRate: 3,
+            frames: this.anims.generateFrameNumbers('vomit-sheet', { start: 0, end: 4 }),
+            repeat: -1           
+        })
+        this.anim = this.add.sprite(
+            game.config.width,
+            game.config.height,
+            'vomit-sheet',
+            0)
+            .setOrigin(1, 1);
+        this.anim.play('vomit-anim');
 
         // GAME VARIABLES
         this.counter = 0;
@@ -55,10 +76,6 @@ class Vomiting extends Phaser.Scene {
             .setOrigin(0.5, 0.5);
         this.title = this.add.image(this.instructionBG.x, (3*game.config.height)/10, 'title-text')
             .setOrigin(0.5, 0.5);
-        // this.arrowKeys = this.add.sprite(this.instructionBG.x, (game.config.height/2) + 25, 'arrows-sheet', 0)
-        //     .setScale(0.7, 0.7)
-        //     .setOrigin(0.5, 0.5);
-        // this.arrowKeys.play('display-arrows');
         this.spaceKey = this.add.sprite(this.instructionBG.x, (game.config.height/2) + 25, 'space-sheet', 0)
             .setScale(0.7, 0.7)
             .setOrigin(0.5, 0.5);

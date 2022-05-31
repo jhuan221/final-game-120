@@ -22,6 +22,14 @@ class Medicine extends Phaser.Scene {
         this.load.image('leftWall', './assets/Med/Med_Left_Wall.png');
         this.load.image('rightWall', './assets/Med/Med_Right_Wall.png');
         this.load.image('player', './assets/Med/Med_Player.png');
+        this.load.spritesheet({
+            key: 'med-sheet',
+            url: './assets/animations/medicine_anim/looking_med.png',
+            frameConfig: {
+                frameWidth: 120,
+                frameHeight: 85
+            }
+        });
     }
 
     create() {
@@ -56,6 +64,21 @@ class Medicine extends Phaser.Scene {
             elem.enabled = false;
         });
 
+        // ANIMATIONS
+        this.anims.create({
+            key: 'display-arrows',
+            frameRate: 10,
+            frames: this.anims.generateFrameNumbers('arrows-sheet', { start: 0, end: 5 }),
+            repeat: -1
+        });
+        
+        this.anims.create({
+            key: 'display-anim',
+            frameRate: 3,
+            frames: this.anims.generateFrameNumbers('med-sheet', { start: 0, end: 4 }),
+            repeat: -1
+        });
+
         // GAME VARIABLES
         this.index = 5;
 
@@ -77,6 +100,13 @@ class Medicine extends Phaser.Scene {
             this.PLAYER_START_Y,
             'player')
             .setOrigin(0.5, 1);
+        this.anim = this.add.sprite(
+            game.config.width,
+            game.config.height,
+            'med-sheet',
+            0)
+            .setOrigin(1, 1);
+        this.anim.play('display-anim');
 
         // TIME INTERVALS
         this.playerDescend = this.time.addEvent({
@@ -98,14 +128,6 @@ class Medicine extends Phaser.Scene {
             delay: 750,
             loop: false
         };
-
-        // ANIMATIONS
-        this.anims.create({
-            key: 'display-arrows',
-            frameRate: 10,
-            frames: this.anims.generateFrameNumbers('arrows-sheet', { start: 0, end: 5 }),
-            repeat: -1
-        });
 
         // INSTRUCTIONS
         this.instructionBG = this.add.image(game.config.width/2, game.config.height/2, 'instructionBG')

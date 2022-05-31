@@ -14,14 +14,6 @@ class Eating extends Phaser.Scene {
         // INSTRUCTIONS
         this.load.image('title-text', './assets/Eating/Eating_Instructions/Eating_Text.png');
         this.load.image('instructionBG', './assets/Eating/Eating_Instructions/Instruction_Background.png');
-        // this.load.spritesheet({
-        //     key: 'arrows-sheet',
-        //     url: './assets/Relax/Relax_Instructions/Relax_Key_Sheet.png',
-        //     frameConfig: {
-        //         frameWidth: 304,
-        //         frameHeight: 230
-        //     }
-        // });
         this.load.spritesheet({
             key: 'space-sheet',
             url: './assets/Eating/Eating_Instructions/Eating_Space_Sheet.gif',
@@ -36,6 +28,14 @@ class Eating extends Phaser.Scene {
         this.load.image('fork', './assets/Eating/Full_Fork.png');
         this.load.image('spoon', './assets/Eating/Full_Spoon.png');
         this.load.image('wall', './assets/test/test-baby-eating/test-wall.png');
+        this.load.spritesheet({
+            key: 'eating-sheet',
+            url: './assets/animations/eat_anim/eating.png',
+            frameConfig: {
+                frameWidth: 120,
+                frameHeight: 85
+            }
+        });
     }
 
     create() {
@@ -114,15 +114,26 @@ class Eating extends Phaser.Scene {
             repeat: -1
         });
 
+        this.anims.create({
+            key: 'eating-anim',
+            frameRate: 3,
+            frames: this.anims.generateFrameNumbers('eating-sheet', { start: 0, end: 4 }),
+            repeat: -1
+        });
+
+        this.anim = this.add.sprite(
+            game.config.width,
+            game.config.height,
+            'eating-sheet',
+            0)
+            .setOrigin(1, 1);
+        this.anim.play('eating-anim');
+
         // INSTRUCTIONS
         this.instructionBG = this.add.image(game.config.width/2, game.config.height/2, 'instructionBG')
             .setOrigin(0.5, 0.5);
         this.title = this.add.image(this.instructionBG.x, (3*game.config.height)/10, 'title-text')
             .setOrigin(0.5, 0.5);
-        // this.arrowKeys = this.add.sprite(this.instructionBG.x, (game.config.height/2) + 25, 'arrows-sheet', 0)
-        //     .setScale(0.7, 0.7)
-        //     .setOrigin(0.5, 0.5);
-        // this.arrowKeys.play('display-arrows');
         this.spaceKey = this.add.sprite(this.instructionBG.x, game.config.height/2 + 25, 'space-sheet', 0)
             .setScale(0.7, 0.7)
             .setOrigin(0.5, 0.5);
