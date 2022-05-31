@@ -118,7 +118,7 @@ class Relax extends Phaser.Scene {
         this.anims.create({
             key: 'display-arrows',
             frameRate: 10,
-            frames: this.anims.generateFrameNumbers('arrows-sheet', { star: 0, end: 11 }),
+            frames: this.anims.generateFrameNumbers('arrows-sheet', { start: 0, end: 11 }),
             repeat: -1
         })
 

@@ -15,6 +15,7 @@ let config = {
         }
     },
     scene: [
+        Medicine,
         DrinkWater,
         //Sickness,
         //Menu,

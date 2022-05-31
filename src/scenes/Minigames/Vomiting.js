@@ -39,7 +39,7 @@ class Vomiting extends Phaser.Scene {
         this.anims.create({
             key: 'display-space',
             frameRate: 10,
-            frames: this.anims.generateFrameNumbers('space-sheet', { star: 0, end: 3 }),
+            frames: this.anims.generateFrameNumbers('space-sheet', { start: 0, end: 3 }),
             repeat: -1
         })
 
