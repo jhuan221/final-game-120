@@ -43,11 +43,12 @@ class Game_Over extends Phaser.Scene {
 
         // checking for player input
         if(Phaser.Input.Keyboard.JustDown(keyM)){
-            this.scene.start('menuScene');
+            this.scene.start('s_menu');
         }
         if(Phaser.Input.Keyboard.JustDown(keyR)){
+            this.scene.start('s_overview');
             // need to implement to switch to overview and make sure things are resetted
-            console.log('restart and switch back to overview');
+            //console.log('restart and switch back to overview');
         }
     }
 }
