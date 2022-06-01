@@ -26,7 +26,8 @@ let config = {
         Relax,
         Vomiting,
         Eating,
-        Sleeping 
+        Sleeping, 
+        Final
     ]
 }
 

@@ -16,6 +16,8 @@ class DrinkWater extends Phaser.Scene {
         this.load.image('space-text', './assets/Drink/Drink_Instructions/Drink_Space.png');
 
         // water [hold spacebar] game sprite
+        this.load.audio('glass-clink', './assets/audio/minigame_sfx/BABY/Glass Clink.wav');
+        this.load.audio('swallow-water', './assets/audio/minigame_sfx/BABY/Swallowing Water Sound Effect.wav')
         this.load.image('BG', './assets/drink/Drink_Background.png');
         this.load.spritesheet({
             key: 'glass-sheet',
@@ -70,7 +72,14 @@ class DrinkWater extends Phaser.Scene {
 
         this.drinkTimer = this.time.addEvent({
             callback: () => {
-                //console.log('Count: ' + this.drinkCounter);
+                this.swallowWaterAudio = this.sound.add(
+                    'swallow-water',
+                    {
+                        volume: 0.2,
+                        loop: false
+                    }
+                );
+                this.swallowWaterAudio.play();
                 this.drinkCounter += 1;
                 if (this.drinkCounter == 3 ){
                     this.glass.setFrame(1, false, false);
@@ -83,8 +92,14 @@ class DrinkWater extends Phaser.Scene {
                 }
                 if (this.drinkCounter == 12){
                     this.glass.setFrame(4, false, false);
-                    // console.log("stop");
-                    // this.time.paused = true;
+                    this.clinkAudio = this.sound.add(
+                        'glass-clink',
+                        {
+                            volume: 0.2,
+                            loop: false
+                        }
+                    );
+                    this.clinkAudio.play();
                     this.end = this.time.addEvent({
                         callback: () => {
                             this.scene.start(this.nextScene, { pg: this.pg });

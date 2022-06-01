@@ -3,7 +3,7 @@ class Overview extends Phaser.Scene {
     constructor() {
         super('s_overview');
 
-        this.progressCounter = 0;
+        this.progressCounter = 3;
         this.gamestart = true;
     }
 
@@ -26,6 +26,14 @@ class Overview extends Phaser.Scene {
                 frameHeight: 100
             }
         });
+        this.load.spritesheet({
+            key: 'hospital-sheet',
+            url: './assets/animations/final_anim/final.png',
+            frameConfig: {
+                frameWidth: 120,
+                frameHeight: 85
+            }
+        });
     }
 
     create() {
@@ -45,16 +53,17 @@ class Overview extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers('task-sheet', { start: 0, end: 7 }),
             repeat: -1
         });
+        this.anims.create({
+            key: 'hospital-anim',
+            frameRate: 24,
+            frames: this.anims.generateFrameNumbers('hospital-sheet', { start: 0, end: 4 }),
+            repeat: -1
+        });
 
         this.human_body = this.add.sprite(game.config.width/2, game.config.height/2, 'human-body');
-        // this.task = this.add.sprite(this.human_body.x, this.human_body.y - 250, 'task-sheet', 0)
-        //     .setOrigin(0.5,0.5)
-        //     .setScale(0.5,0.5)
-        //     .setInteractive({ useHandCursor: true })
-        //     .on('pointerdown', () => { 
-        //         this.scene.sleep('s_overview').start('s_drinkwater');
-        //     }, this);
-        // this.task.play('task-anim');
+        this.hospitalAnim = this.add.sprite(game.config.width, 0, 'hospital-sheet', 0).setOrigin(1, 0);
+        this.hospitalAnim.play('hospital-anim');
+        this.hospitalAnim.visible = false;
 
         // PROTO SCENE LIST
         this.ov = 's_overview',
@@ -80,12 +89,13 @@ class Overview extends Phaser.Scene {
             .setOrigin(0.5,0.5)
             .setScale(0.5,0.5)
             .setInteractive({ useHandCursor: true })
-            .on('pointerdown', () => { 
+            .on('pointerdown', () => {
+                this.BG_Audio.mute = true; 
                 this.goToNextScene(this.startScene, this.nextScene, this.nextScene2);
             }, this);
             this.taskBtn.play('task-anim');
         
-        this.progressCounter = 15;
+        //this.progressCounter = 3;
         console.log(this.progressCounter);
     }
 
@@ -182,9 +192,10 @@ class Overview extends Phaser.Scene {
                 this.nextScene2 = null;
                 break;
             case 15: // 5:00
+                this.hospitalAnim.visible = true;
                 this.taskBtn.x = this.human_body.x;
                 this.taskBtn.y = this.human_body.y - 100;
-                this.startScene = this.rt;
+                this.startScene = 's_final';
                 break;
         }
     }

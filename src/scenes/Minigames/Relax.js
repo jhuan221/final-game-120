@@ -212,13 +212,8 @@ class Relax extends Phaser.Scene {
         // GAME VARIABLES
         this.score = 0;
 
-        this.end = this.time.addEvent({
-            callback: () => {
-                this.scene.start(this.nextScene, { pg: this.pg });
-            },
-            delay: 2000
-        });
-        this.end.paused = true;
+        
+        //this.end.paused = true;
     }
 
     update() {
@@ -263,7 +258,13 @@ class Relax extends Phaser.Scene {
         
 
         if (this.score >= 30) {
-            this.end.paused = false;
+            //this.end.paused = false;
+            this.end = this.time.addEvent({
+                callback: () => {
+                    this.scene.start(this.nextScene, { pg: this.pg });
+                },
+                delay: 2000
+            });
         }
     }
 }
