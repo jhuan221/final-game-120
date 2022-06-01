@@ -29,16 +29,14 @@ class Overview extends Phaser.Scene {
     }
 
     create() {
-        if (this.gamestart){
-            this.BG_Audio = this.sound.add(
-                'heartbeat', 
-                { 
-                    volume: 0.2,
-                    loop: true
-                });
-            this.BG_Audio.play();
-            this.gamestart = false;
-        }
+        this.BG_Audio = this.sound.add(
+            'heartbeat', 
+            { 
+                volume: 0.2,
+                loop: true
+            });
+        this.BG_Audio.play();
+        this.gamestart = false;
 
         // ANIMATIONS
         this.anims.create({
@@ -120,11 +118,13 @@ class Overview extends Phaser.Scene {
                 this.taskBtn.y = this.human_body.y - 250;
                 this.startScene = this.sl;
                 this.nextScene = this.ov;
+                break;
             case 5:
                 this.taskBtn.x = this.human_body.x - 200;
                 this.taskBtn.y = this.human_body.y - 100;
                 this.startScene = this.mt;
                 this.nextScene = this.et;
+                break;
             case 6:
                 this.taskBtn.x = this.human_body.x - 150;
                 this.taskBtn.y = this.human_body.y + 100;
@@ -148,21 +148,25 @@ class Overview extends Phaser.Scene {
                 this.taskBtn.y = this.human_body.y - 250;
                 this.startScene = this.dt;
                 this.nextScene = this.et;
+                break;
             case 10: // 3:20
                 this.taskBtn.x = this.human_body.x; 
                 this.taskBtn.y = this.human_body.y - 250;
                 this.startScene = this.dt;
                 this.nextScene = this.vt;
+                break;
             case 11: // 3:40
                 this.taskBtn.x = this.human_body.x;
                 this.taskBtn.y = this.human_body.y - 50;
                 this.startScene = this.si;
                 this.nextScene = this.vt;
+                break;
             case 12: // 4:00
                 this.taskBtn.x = this.human_body.x - 100;
                 this.taskBtn.y = this.human_body.y - 250;
                 this.startScene = this.sl;
                 this.nextScene = this.mt;
+                break;
             case 13: // 4:20
                 this.taskBtn.x = this.human_body.x + 75;
                 this.taskBtn.y = this.human_body.y - 175;
@@ -181,6 +185,7 @@ class Overview extends Phaser.Scene {
                 this.taskBtn.x = this.human_body.x;
                 this.taskBtn.y = this.human_body.y - 100;
                 this.startScene = this.rt;
+                break;
         }
     }
 
