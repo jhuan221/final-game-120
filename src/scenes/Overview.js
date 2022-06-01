@@ -16,10 +16,16 @@ class Overview extends Phaser.Scene {
 
     create() {
         if (this.gamestart){
-            this.sound.play('heartbeat');
+            this.BG_Audio = this.sound.add(
+                'heartbeat', 
+                { 
+                    volume: 0.2,
+                    loop: true
+                });
+            this.BG_Audio.play();
             this.gamestart = false;
         }
-        this.human_body = this.add.sprite(game.config.width/4, game.config.height/2, 'human-body');
+        this.human_body = this.add.sprite(game.config.width/2, game.config.height/2, 'human-body');
         this.task = this.add.sprite(this.human_body.x + 150, this.human_body.y, 'task')
             .setOrigin(0.5,0.5)
             .setScale(0.5,0.5)
