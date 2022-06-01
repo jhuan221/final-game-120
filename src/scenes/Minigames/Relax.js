@@ -45,6 +45,15 @@ class Relax extends Phaser.Scene {
                 frameHeight: 85
             }
         });
+
+        // AUDIO
+        this.load.audio('left-audio', './assets/audio/new sound/Bird_01.wav');
+        this.load.audio('right-audio', './assets/audio/new sound/Bird_02.wav');
+        this.load.audio('up-audio', './assets/audio/new sound/Bird_03.wav');
+        this.load.audio('down-audio', './assets/audio/new sound/Bird_05.wav');
+        this.load.audio('missed-audio', './assets/audio/new sound/Bird_04.wav');
+        this.load.audio('relaxBG-audio', './assets/audio/new sound/new_BGM2.wav');
+        this.load.audio('relax-complete-audio', './assets/audio/new sound/Bird Complete.wav');
     }
 
     create() {

@@ -4,7 +4,8 @@ class Overview extends Phaser.Scene {
         super('s_overview');
 
         this.progressCounter = 0;
-        this.gamestart = true;
+        this.gamestart = false;
+        this.musicPaused = false;
     }
 
     init(data) {
@@ -37,15 +38,25 @@ class Overview extends Phaser.Scene {
     }
 
     create() {
+        console.log(this.gamestart);
         this.BG_Audio = this.sound.add(
             'heartbeat', 
             { 
                 volume: 0.2,
                 loop: true
+            }
+        );
+        
+        if (!this.gamestart && !this.sound.locked) {
+            this.BG_Audio.play();
+            this.gamestart = true;
+        }
+        else {
+            this.sound.once(Phaser.Sound.Events.UNLOCKED, () => {
+                this.BG_Audio.play();
             });
-        this.BG_Audio.play();
-        this.gamestart = false;
-
+        }
+        
         // ANIMATIONS
         this.anims.create({
             key: 'task-anim',
@@ -76,6 +87,7 @@ class Overview extends Phaser.Scene {
         this.vt = 's_vomiting'
 
         this.sceneTracker = this.ov;
+        this.muteAudio = false;
 
         this.startScene = this.dt;
         this.nextScene = this.ov;
@@ -90,7 +102,7 @@ class Overview extends Phaser.Scene {
             .setScale(0.5,0.5)
             .setInteractive({ useHandCursor: true })
             .on('pointerdown', () => {
-                this.BG_Audio.mute = true; 
+                this.BG_Audio.mute = this.muteAudio ? true : false; 
                 this.goToNextScene(this.startScene, this.nextScene, this.nextScene2);
             }, this);
             this.taskBtn.play('task-anim');
@@ -118,6 +130,7 @@ class Overview extends Phaser.Scene {
                 this.nextScene = this.dt
                 break;
             case 3:
+                this.muteAudio = true;
                 this.taskBtn.x = this.human_body.x - 150;
                 this.taskBtn.y = this.human_body.y + 100;
                 this.startScene = this.rt;
