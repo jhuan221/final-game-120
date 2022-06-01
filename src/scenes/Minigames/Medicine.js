@@ -184,6 +184,7 @@ class Medicine extends Phaser.Scene {
 
         if (this.player.y == this.WALL_START_Y) {
             this.playerDescend.paused = true;
+            this.scene.start('s_overview', { pg: 1 });
         }
 
         if ((this.player.y == this.BAD_SPOT1) && (this.index == 0 || 

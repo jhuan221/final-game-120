@@ -4,7 +4,11 @@ class DrinkWater extends Phaser.Scene {
         super('s_drinkwater');
     }
 
-    preload(){
+    init(data) {
+        this.nextScene = data.next;
+    }
+
+    preload() {
         // INSTRUCTIONS
         this.load.image('title-text', './assets/Drink/Drink_Instructions/Drink_Text.png');
         this.load.image('instructionBG', './assets/Drink/Drink_Instructions/Instruction_Background.png');
@@ -28,19 +32,41 @@ class DrinkWater extends Phaser.Scene {
                 frameHeight: 20
             }
         });
+        this.load.spritesheet({
+            key: 'drink-sheet',
+            url: './assets/animations/drink_anim/drinking.png',
+            frameConfig: {
+                frameWidth: 120,
+                frameHeight: 85
+            }
+        });
     }
+
     create() {
         keySp = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
-        this.bg = this.add.image(0, -2, 'background').setOrigin(0, 0);
+        this.bg = this.add.sprite(0, 0, 'background', 0)
+            .setOrigin(0, 0);
         this.thirst = this.add.sprite(game.config.width/2, game.config.height - 60, 'thirst-sheet', 0)
             .setOrigin(0.5, 0.5);
         this.glass = this.add.sprite(game.config.width/2, game.config.height/2, 'glass-sheet', 0)
             .setOrigin(0.5, 0.5);
+        this.drinkAnim = this.add.sprite(game.config.width, game.config.height, 'drink-sheet', 0)
+            .setOrigin(1, 1);
+        
+        // ANIMATIONS
+        this.anims.create({
+            key: 'drink-anim',
+            frameRate: 3,
+            frames: this.anims.generateFrameNumbers('drink-sheet', { start: 0, end: 4 }),
+            repeat: -1
+        });
+        this.drinkAnim.play('drink-anim');
 
         // GAME VARIABLES
         this.frame = 0;
         this.drinkCounter = 0;
+
         this.drinkTimer = this.time.addEvent({
             callback: () => {
                 //console.log('Count: ' + this.drinkCounter);
@@ -56,9 +82,15 @@ class DrinkWater extends Phaser.Scene {
                 }
                 if (this.drinkCounter == 12){
                     this.glass.setFrame(4, false, false);
-                    console.log("stop");
-                    this.time.paused = true;
-                    // this.done = true;
+                    // console.log("stop");
+                    // this.time.paused = true;
+                    this.end = this.time.addEvent({
+                        callback: () => {
+                            this.scene.start(this.nextScene, { pg: 1 });
+                        },
+                        callbackScope: this,
+                        delay: 2000
+                    })
                 }
             },
             delay: 1000,
@@ -124,9 +156,9 @@ class DrinkWater extends Phaser.Scene {
         // }
         // water [hold spacebar] functionality
         this.drinkWater(this.drinkTimer);
-        if (this.done){
-            this.scene.stop('s_drinkwater').start('s_overview');
-        }
+        // if (this.done){
+        //     this.scene.stop('s_drinkwater').start('s_overview');
+        // }
     }
 
     // player hold spacebar for 10 seconds consectively to drink water

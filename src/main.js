@@ -17,17 +17,16 @@ let config = {
     scene: [
         //Menu,
         //Credits,
-        //Overview,
-        Game_Over,
         Overview,
+        Game_Over,
         Menu,
-        //Medicine,
+        Medicine,
         DrinkWater,
-        //Sickness,
-        //Relax,
-        //Vomiting,
-        //Eating,
-        //Sleeping 
+        Sickness,
+        Relax,
+        Vomiting,
+        Eating,
+        Sleeping 
     ]
 }
 
