@@ -3,7 +3,7 @@ class Overview extends Phaser.Scene {
     constructor() {
         super('s_overview');
 
-        this.progressCounter = 3;
+        this.progressCounter = 0;
         this.gamestart = true;
     }
 
