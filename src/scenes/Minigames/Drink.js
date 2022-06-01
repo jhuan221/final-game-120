@@ -5,7 +5,8 @@ class DrinkWater extends Phaser.Scene {
     }
 
     init(data) {
-        this.nextScene = data.next;
+        this.nextScene = data.next != null ? data.next : 's_overview';
+        this.pg = data.pg;
     }
 
     preload() {
@@ -15,7 +16,7 @@ class DrinkWater extends Phaser.Scene {
         this.load.image('space-text', './assets/Drink/Drink_Instructions/Drink_Space.png');
 
         // water [hold spacebar] game sprite
-        this.load.image('background', './assets/drink/Drink_Background.png');
+        this.load.image('BG', './assets/drink/Drink_Background.png');
         this.load.spritesheet({
             key: 'glass-sheet',
             url: './assets/drink/Glass_Sheet.png',
@@ -45,11 +46,11 @@ class DrinkWater extends Phaser.Scene {
     create() {
         keySp = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
-        this.bg = this.add.sprite(0, 0, 'background', 0)
+        this.bg = this.add.sprite(0, -80, 'BG', 0)
             .setOrigin(0, 0);
-        this.thirst = this.add.sprite(game.config.width/2, game.config.height - 60, 'thirst-sheet', 0)
+        this.thirst = this.add.sprite(game.config.width/2, game.config.height - 140, 'thirst-sheet', 0)
             .setOrigin(0.5, 0.5);
-        this.glass = this.add.sprite(game.config.width/2, game.config.height/2, 'glass-sheet', 0)
+        this.glass = this.add.sprite(game.config.width/2, (game.config.height/2) - 80, 'glass-sheet', 0)
             .setOrigin(0.5, 0.5);
         this.drinkAnim = this.add.sprite(game.config.width, game.config.height, 'drink-sheet', 0)
             .setOrigin(1, 1);
@@ -86,11 +87,11 @@ class DrinkWater extends Phaser.Scene {
                     // this.time.paused = true;
                     this.end = this.time.addEvent({
                         callback: () => {
-                            this.scene.start(this.nextScene, { pg: 1 });
+                            this.scene.start(this.nextScene, { pg: this.pg });
                         },
                         callbackScope: this,
                         delay: 2000
-                    })
+                    });
                 }
             },
             delay: 1000,

@@ -4,6 +4,11 @@ class Medicine extends Phaser.Scene {
         super('s_medicine');
     }
 
+    init(data) {
+        this.nextScene = data.next != null ? data.next : 's_overview';
+        this.pg = data.pg;
+    }
+
     preload() {
         // INSTRUCTIONS
         this.load.image('title-text', './assets/Med/Med_Instructions/Med_Text.png');
@@ -21,7 +26,7 @@ class Medicine extends Phaser.Scene {
         this.load.image('medBG', '/assets/Med/Med_Background.png');
         this.load.image('leftWall', './assets/Med/Med_Left_Wall.png');
         this.load.image('rightWall', './assets/Med/Med_Right_Wall.png');
-        this.load.image('player', './assets/Med/Med_Player.png');
+        this.load.image('player', './assets/Med/Med_Player_New.png');
         this.load.spritesheet({
             key: 'med-sheet',
             url: './assets/animations/medicine_anim/looking_med.png',
@@ -177,6 +182,14 @@ class Medicine extends Phaser.Scene {
         }
 
         this.displayInstructions = this.time.addEvent(this.displayInstructionsConfig);
+
+        this.end = this.time.addEvent({
+            callback: () => {
+                this.scene.start('s_overview', { pg: this.pg });
+            },
+            delay: 2000
+        });
+        this.end.paused = true;
     }
 
     update() {
@@ -184,7 +197,7 @@ class Medicine extends Phaser.Scene {
 
         if (this.player.y == this.WALL_START_Y) {
             this.playerDescend.paused = true;
-            this.scene.start('s_overview', { pg: 1 });
+            this.end.paused = false;
         }
 
         if ((this.player.y == this.BAD_SPOT1) && (this.index == 0 || 

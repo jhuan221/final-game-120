@@ -10,6 +10,12 @@ class Eating extends Phaser.Scene {
 
     }
 
+    init(data) {
+        this.nextScene = data.next != null ? data.next : 's_overview';
+        this.nextScene2 = data.next2 != null ? data.next2 : null;
+        this.pg = data.pg;
+    }
+
     preload() {
         // INSTRUCTIONS
         this.load.image('title-text', './assets/Eating/Eating_Instructions/Eating_Text.png');
@@ -23,7 +29,7 @@ class Eating extends Phaser.Scene {
             }
         });
 
-        this.load.image('background', './assets/Eating/Eating_Background.png');
+        this.load.image('eatBG', './assets/Eating/Eating_Background.png');
         this.load.image('plane', './assets/Eating/Orange_Chicken.png');
         this.load.image('fork', './assets/Eating/Full_Fork.png');
         this.load.image('spoon', './assets/Eating/Full_Spoon.png');
@@ -45,7 +51,7 @@ class Eating extends Phaser.Scene {
         //this.keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
         this.keySPC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.keySPC.enabled = false;
-        this.background = this.add.sprite(0, -80, 'background').setOrigin(0,0);
+        this.background = this.add.sprite(0, -80, 'eatBG').setOrigin(0,0);
 
         // PLAYER SETTINGS
         this.player = this.physics.add.sprite(this.PLAYER_START_X, this.PLAYER_START_Y, 'plane');
@@ -179,6 +185,15 @@ class Eating extends Phaser.Scene {
         }
 
         this.displayInstructions = this.time.addEvent(this.displayInstructionsConfig);
+
+        this.end = this.time.addEvent({
+            callback: () => {
+                this.physics.world.gravity.y = 0;
+                this.keySPC.enabled = false;
+                this.scene.start(this.nextScene, { next: this.nextScene2, pg: this.pg, });
+            },
+            delay: 30000
+        });
     }
 
     update() {

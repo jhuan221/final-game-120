@@ -4,6 +4,11 @@ class Relax extends Phaser.Scene {
         super('s_relax');
     }
 
+    init(data) {
+        this.nextScene = data.next != null ? data.next : 's_overview';
+        this.pg = data.pg;
+    }
+
     preload () {
         // INSTRUCTIONS
         this.load.image('title-text', './assets/Relax/Relax_Instructions/Relax_Text.png');
@@ -18,7 +23,7 @@ class Relax extends Phaser.Scene {
         });
 
         // MAIN UI
-        this.load.image('background', './assets/Relax/Relax_Background.png');
+        this.load.image('relaxBG', './assets/Relax/Relax_Background.png');
         this.load.image('still-all', './assets/Relax/Still_All.png');
         this.load.image('move-down', './assets/Relax/Move_Down.png');
         this.load.image('move-left', './assets/Relax/Move_Left.png');
@@ -44,7 +49,7 @@ class Relax extends Phaser.Scene {
 
     create() {
         // GAME SETUP
-        this.background = this.add.sprite(0, 0, 'background').setOrigin(0,0);
+        this.background = this.add.sprite(0, 0, 'relaxBG').setOrigin(0,0);
 
         // GAME OBJECTS
         this.bird = this.add.sprite( ((7*game.config.width)/10)-50, (4*game.config.height)/10, 'bird-sheet', 0 )
@@ -206,6 +211,14 @@ class Relax extends Phaser.Scene {
 
         // GAME VARIABLES
         this.score = 0;
+
+        this.end = this.time.addEvent({
+            callback: () => {
+                this.scene.start(this.nextScene, { pg: this.pg });
+            },
+            delay: 2000
+        });
+        this.end.paused = true;
     }
 
     update() {
@@ -250,7 +263,7 @@ class Relax extends Phaser.Scene {
         
 
         if (this.score >= 30) {
-            console.log("complete");
+            this.end.paused = false;
         }
     }
 }

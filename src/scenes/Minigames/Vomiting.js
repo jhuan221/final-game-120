@@ -4,6 +4,11 @@ class Vomiting extends Phaser.Scene {
         super('s_vomiting');
     }
 
+    init(data) {
+        this.nextScene = data.next != null ? data.next : 's_overview';
+        this.pg = data.pg;
+    }
+
     preload() {
         // INSTRUCTIONS
         this.load.image('title-text', './assets/Vomit/Vomit_Instructions/Vomit_Text.png');
@@ -17,7 +22,7 @@ class Vomiting extends Phaser.Scene {
             }
         });
 
-        this.load.image('background', './assets/Vomit/Pipe_Background.png');
+        this.load.image('vomitBG', './assets/Vomit/Pipe_Background.png');
         this.load.spritesheet({
             key: 'pipe-sheet', 
             url: './assets/Vomit/V_Pipe-Sheet.png',
@@ -38,7 +43,7 @@ class Vomiting extends Phaser.Scene {
 
     create() {
         // SCENE SETUP
-        this.background = this.add.sprite(0, 0, 'background').setOrigin(0,0);
+        this.background = this.add.sprite(0, 0, 'vomitBG').setOrigin(0,0);
 
         // CONTROLS
         keySp = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -120,6 +125,13 @@ class Vomiting extends Phaser.Scene {
 
         this.displayInstructions = this.time.addEvent(this.displayInstructionsConfig);
 
+        this.end = this.time.addEvent({
+            callback: () => {
+                this.scene.start(this.nextScene, { pg: this.pg });
+            },
+            delay: 2000
+        });
+        this.end.paused = true;
     }
        
 
@@ -129,6 +141,10 @@ class Vomiting extends Phaser.Scene {
             case true: 
                 this.frame -= 1;
                 this.counter = 0;
+                break;
+        }
+        if (this.frame == -1) {
+            this.end.paused = false;
         }
         this.vpipe.setFrame(this.frame, false, false);
     }

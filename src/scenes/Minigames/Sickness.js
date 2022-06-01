@@ -4,6 +4,11 @@ class Sickness extends Phaser.Scene {
         super('s_sickness');
     }
 
+    init(data) {
+        this.nextScene = data.next != null ? data.next : 's_overview';
+        this.pg = data.pg;
+    }
+
     preload() {
         // INSTRUCTIONS
         this.load.image('sick-text', './assets/Sick/Sick_Instructions/Sick_Text.png');
@@ -269,10 +274,19 @@ class Sickness extends Phaser.Scene {
         this.anim.play('sick-anim');
 
         // TIME EVENTS
+        this.end = this.time.addEvent({
+            callback: () => {
+                this.scene.start(this.nextScene, { pg: this.pg });
+            },
+            delay: 2000
+        });
+        this.end.paused = true;
+
         this.enemyDefeatedEvent = this.time.addEvent({
             callback: () => {
                 this.superText.visible = false;
                 this.victoryText.visible = true;
+                this.end.paused = false;
             },
             delay: 1500,
             loop: false,
@@ -393,6 +407,15 @@ class Sickness extends Phaser.Scene {
             loop: false,
             repeat: 8
         }
+
+        this.end = this.time.addEvent({
+            callback: () => {
+                this.scene.start(this.nextScene, { pg: this.pg });
+            },
+            delay: 2000
+        });
+
+        this.end.paused = true;
 
     }
 

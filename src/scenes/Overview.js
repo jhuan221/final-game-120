@@ -70,141 +70,25 @@ class Overview extends Phaser.Scene {
 
         this.sceneTracker = this.ov;
 
-        // .on('pointerdown', () => { 
-        //     this.scene.sleep('s_overview').start('s_eating');
-        // }, this);
-
-        //  PROTO TASK LIST
-        // this.drinkTask = this.add.sprite(this.human_body.x, this.human_body.y - 250, 'task-sheet', 0)
-        //                     .setOrigin(0.5,0.5)
-        //                     .setScale(0.5,0.5)
-        //                     .setInteractive({ useHandCursor: true });
-        // this.eatTask = this.sleepTask = this.add.sprite(this.human_body.x, this.human_body.y - 250, 'task-sheet', 0)
-        //                     .setOrigin(0.5,0.5)
-        //                     .setScale(0.5,0.5)
-        //                     .setInteractive({ useHandCursor: true });
-        // this.relaxTask = this.add.sprite(this.human_body.x, this.human_body.y - 250, 'task-sheet', 0)
-        //                     .setOrigin(0.5,0.5)
-        //                     .setScale(0.5,0.5)
-        //                     .setInteractive({ useHandCursor: true });
-        // this.sickTask = this.add.sprite(this.human_body.x, this.human_body.y - 250, 'task-sheet', 0)
-        //                     .setOrigin(0.5,0.5)
-        //                     .setScale(0.5,0.5)
-        //                     .setInteractive({ useHandCursor: true });
-        // this.sleepTask = this.add.sprite(this.human_body.x, this.human_body.y - 250, 'task-sheet', 0)
-        //                     .setOrigin(0.5,0.5)
-        //                     .setScale(0.5,0.5)
-        //                     .setInteractive({ useHandCursor: true });
-        // this.vomitTask = this.add.sprite(this.human_body.x, this.human_body.y - 250, 'task-sheet', 0)
-        //                     .setOrigin(0.5,0.5)
-        //                     .setScale(0.5,0.5)
-        //                     .setInteractive({ useHandCursor: true });
-
-        // this.protoTaskList = [
-        //     this.drinkTask,
-        //     this.eatTask,
-        //     this.medTask,
-        //     this.relaxTask,
-        //     this.sickTask,
-        //     this.sleepTask,
-        //     this.vomitTask
-        // ];
-
-        // this.protoTaskList.forEach((elem) => {
-        //     elem.active = false;
-        //     elem.visible = false;
-        // });
-        
-        // this.taskList = [
-            
-        //     this.eatTask // 0:40
-        //         .on('pointerdown', () => { 
-        //             this.scene.sleep(this.ov).start(this.et, { next: this.dt });
-        //         }, this),
-        //     this.relaxTask // 1:00
-        //         .on('pointerdown', () => { 
-        //             this.scene.sleep(this.ov).start(this.rt, { next: this.ov });
-        //         }, this),
-        //     this.sleepTask // 1:20
-        //         .on('pointerdown', () => { 
-        //             this.scene.sleep(this.ov).start(this.sl, { next: this.ov });
-        //         }, this),
-        //     this.medTask // 1:40
-        //         .on('pointerdown', () => { 
-        //             this.scene.sleep(this.ov).start(this.mt, { next: this.et });
-        //         }, this),
-        //     this.relaxTask // 2:00
-        //         .on('pointerdown', () => { 
-        //             this.scene.sleep(this.ov).start(this.rt, { next: this.ov });
-        //         }, this),
-        //     this.sickTask // 2:20
-        //         .on('pointerdown', () => { 
-        //             this.scene.sleep(this.ov).start(this.si, { next: this.et });
-        //         }, this),
-        //     this.sleepTask // 2:40
-        //         .on('pointerdown', () => { 
-        //             this.scene.sleep(this.ov).start(this.sl, { next: this.ov });
-        //         }, this),
-        //     this.drinkTask // 3:00
-        //         .on('pointerdown', () => { 
-        //             this.scene.sleep(this.ov).start(this.dt, { next: this.et });
-        //         }, this),
-        //     this.drinkTask // 3:20
-        //         .on('pointerdown', () => { 
-        //             this.scene.sleep(this.ov).start(this.dt, { next: this.vt });
-        //         }, this),
-        //     this.sickTask // 3:40
-        //         .on('pointerdown', () => { 
-        //             this.scene.sleep(this.ov).start(this.si, { next: this.vt });
-        //         }, this),
-        //     this.sleepTask // 4:00
-        //         .on('pointerdown', () => { 
-        //             this.scene.sleep(this.ov).start(this.sl, { next: this.mt });
-        //         }, this),
-        //     this.eatTask // 4:20
-        //         .on('pointerdown', () => { 
-        //             this.scene.sleep(this.ov).start(this.et, { next: [ this.si, this.vt ] });
-        //         }, this),
-        //     this.medTask // 4:40
-        //         .on('pointerdown', () => { 
-        //             this.scene.sleep(this.ov).start(this.rt, { next: this.dt });
-        //         }, this),
-            
-        // ]
-
-        // this.task0 = this.add.sprite(this.human_body.x, this.human_body.y - 250, 'task-sheet', 0)
-        //             .setOrigin(0.5,0.5)
-        //             .setScale(0.5,0.5)
-        //             .setInteractive({ useHandCursor: true })
-        //             .on('pointerdown', () => { 
-        //                 this.scene.sleep(this.ov).start(this.dt, { next: this.ov });
-        //             }, this)
-        // this.task0.play('task-anim');
-
-        
-
-        // this.taskList = [
-        //     this.task0,
-        //     this.task1
-        // ]
-        
-        // this.taskList.forEach((elem) => {
-        //     elem.active = false;
-        //     elem.visible = false;
-        // })
-
         this.startScene = this.dt;
         this.nextScene = this.ov;
+        this.nextScene2 = null;
 
-        this.taskBtn = this.add.sprite(this.human_body.x, this.human_body.y - 250, 'task-sheet', 0)
-        .setOrigin(0.5,0.5)
-        .setScale(0.5,0.5)
-        .setInteractive({ useHandCursor: true })
-        .on('pointerdown', () => { 
-            this.goToNextScene(this.startScene, this.nextScene);
-        }, this);
-        this.taskBtn.play('task-anim');
-        this.progressCounter = 1;
+        this.taskBtn = this.add.sprite(
+            this.human_body.x, 
+            this.human_body.y - 250, 
+            'task-sheet', 
+            0)
+            .setOrigin(0.5,0.5)
+            .setScale(0.5,0.5)
+            .setInteractive({ useHandCursor: true })
+            .on('pointerdown', () => { 
+                this.goToNextScene(this.startScene, this.nextScene, this.nextScene2);
+            }, this);
+            this.taskBtn.play('task-anim');
+        
+        this.progressCounter = 15;
+        console.log(this.progressCounter);
     }
 
     update() {
@@ -221,13 +105,86 @@ class Overview extends Phaser.Scene {
                 break;
             case 2:
                 this.taskBtn.x = this.human_body.x + 75;
+                this.taskBtn.y = this.human_body.y - 175;
                 this.startScene = this.et;
                 this.nextScene = this.dt
-                
+                break;
+            case 3:
+                this.taskBtn.x = this.human_body.x - 150;
+                this.taskBtn.y = this.human_body.y + 100;
+                this.startScene = this.rt;
+                this.nextScene = this.ov;
+                break;
+            case 4:
+                this.taskBtn.x = this.human_body.x - 100;
+                this.taskBtn.y = this.human_body.y - 250;
+                this.startScene = this.sl;
+                this.nextScene = this.ov;
+            case 5:
+                this.taskBtn.x = this.human_body.x - 200;
+                this.taskBtn.y = this.human_body.y - 100;
+                this.startScene = this.mt;
+                this.nextScene = this.et;
+            case 6:
+                this.taskBtn.x = this.human_body.x - 150;
+                this.taskBtn.y = this.human_body.y + 100;
+                this.startScene = this.rt;
+                this.nextScene = this.ov;
+                break;
+            case 7:
+                this.taskBtn.x = this.human_body.x;
+                this.taskBtn.y = this.human_body.y - 50;
+                this.startScene = this.si;
+                this.nextScene = this.et;
+                break;
+            case 8:
+                this.taskBtn.x = this.human_body.x - 100;
+                this.taskBtn.y = this.human_body.y - 250;
+                this.startScene = this.sl;
+                this.nextScene = this.ov;
+                break;
+            case 9: // 3:00
+                this.taskBtn.x = this.human_body.x; 
+                this.taskBtn.y = this.human_body.y - 250;
+                this.startScene = this.dt;
+                this.nextScene = this.et;
+            case 10: // 3:20
+                this.taskBtn.x = this.human_body.x; 
+                this.taskBtn.y = this.human_body.y - 250;
+                this.startScene = this.dt;
+                this.nextScene = this.vt;
+            case 11: // 3:40
+                this.taskBtn.x = this.human_body.x;
+                this.taskBtn.y = this.human_body.y - 50;
+                this.startScene = this.si;
+                this.nextScene = this.vt;
+            case 12: // 4:00
+                this.taskBtn.x = this.human_body.x - 100;
+                this.taskBtn.y = this.human_body.y - 250;
+                this.startScene = this.sl;
+                this.nextScene = this.mt;
+            case 13: // 4:20
+                this.taskBtn.x = this.human_body.x + 75;
+                this.taskBtn.y = this.human_body.y - 175;
+                this.startScene = this.et;
+                this.nextScene = this.si;
+                this.nextScene2 = this.vt;
+                break;
+            case 14: // 4:40
+                this.taskBtn.x = this.human_body.x - 150;
+                this.taskBtn.y = this.human_body.y + 100;
+                this.startScene = this.rt;
+                this.nextScene = this.dt;
+                this.nextScene2 = null;
+                break;
+            case 15: // 5:00
+                this.taskBtn.x = this.human_body.x;
+                this.taskBtn.y = this.human_body.y - 100;
+                this.startScene = this.rt;
         }
     }
 
-    goToNextScene(start, nextScene) {
-        this.scene.sleep(this.ov).start(start, { next: nextScene });
+    goToNextScene(start, nextScene, nextScene2) {
+        this.scene.sleep(this.ov).start(start, { next: nextScene, pg: 1, next2: nextScene2 });
     }
 }

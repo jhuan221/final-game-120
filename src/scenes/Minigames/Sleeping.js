@@ -11,6 +11,11 @@ class Sleeping extends Phaser.Scene {
 
     }
 
+    init(data) {
+        this.nextScene = data.next;
+        this.pg = data.pg;
+    }
+
     preload() {
         // INSTRUCTIONS
         this.load.image('title-text', './assets/Sleep/Sleep_Instructions/Sleep_Text.png');
@@ -161,6 +166,13 @@ class Sleeping extends Phaser.Scene {
             case 2:
                 this.fence.setScale(1,2.25);
                 break;
+            case 3:
+                this.end = this.time.addEvent({
+                    callback: () => {
+                        this.scene.start(this.nextScene, { pg: this.pg });
+                    },
+                    delay: 2000
+                })
         }
         if (this.keySPC.isDown && this.sheep.body.touching.down) {
             this.isCharging = true;
