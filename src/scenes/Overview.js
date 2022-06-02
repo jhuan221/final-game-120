@@ -3,15 +3,14 @@ class Overview extends Phaser.Scene {
     constructor() {
         super('s_overview');
 
-        this.progressCounter = 15;
+        this.HEALTH = 0;
+        this.progressCounter = 0;
         this.gamestart = false;
         this.BG_Audio;
     }
 
     init(data) {
-        if (data.pg) {
-            this.progressCounter += data.pg;
-        }
+        this.progressCounter += data.pg ? data.pg : 0;
     }
 
     preload() {
@@ -33,6 +32,14 @@ class Overview extends Phaser.Scene {
             frameConfig: {
                 frameWidth: 120,
                 frameHeight: 85
+            }
+        });
+        this.load.spritesheet({
+            key: 'mainHealthBar-sheet',
+            url: './assets/Health_Bar_Sheet.png',
+            frameConfig: {
+                frameWidth: 399,
+                frameHeight: 29
             }
         });
     }
@@ -68,6 +75,16 @@ class Overview extends Phaser.Scene {
         });
 
         this.human_body = this.add.sprite(game.config.width/2, game.config.height/2, 'human-body');
+        this.healthbar = this.add.sprite(this.human_body.x, this.human_body.y + 250, 'mainHealthBar-sheet', this.HEALTH).setOrigin(0.5, 0.5);
+        
+        this.healthTime = this.time.addEvent({
+            callback: () => {
+                this.HEALTH += 1;
+            },
+            delay: 16600,
+            loop: true
+        });
+
         this.hospitalAnim = this.add.sprite(game.config.width, 0, 'hospital-sheet', 0).setOrigin(1, 0);
         this.hospitalAnim.play('hospital-anim');
         this.hospitalAnim.visible = false;
@@ -102,6 +119,7 @@ class Overview extends Phaser.Scene {
     }
 
     update() {
+        this.healthbar.setFrame(this.HEALTH, false, false);
         switch (this.progressCounter) {
             case 0:
                 this.startScene = this.dt;
@@ -204,6 +222,11 @@ class Overview extends Phaser.Scene {
     }
 
     goToNextScene(start, nextScene, nextScene2) {
-        this.scene.start(start, { next: nextScene, pg: 1, next2: nextScene2, music: this.BG_Audio });
+        this.scene.launch(start, { 
+            next: nextScene, 
+            next2: nextScene2,
+            pg: 1, 
+            music: this.BG_Audio
+        });
     }
 }

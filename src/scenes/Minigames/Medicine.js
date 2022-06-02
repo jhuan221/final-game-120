@@ -35,6 +35,14 @@ class Medicine extends Phaser.Scene {
                 frameHeight: 85
             }
         });
+        this.load.spritesheet({
+            key: 'complete-sheet',
+            url: './assets/Complete_Sheet.png',
+            frameConfig: {
+                frameWidth: 665,
+                frameHeight: 665
+            }
+        });
 
         this.load.audio('pill-shake', './assets/audio/new sound/medicine.wav');
     }
@@ -78,12 +86,17 @@ class Medicine extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers('med-arrows-sheet', { start: 0, end: 5 }),
             repeat: -1
         });
-        
         this.anims.create({
             key: 'display-anim',
             frameRate: 3,
             frames: this.anims.generateFrameNumbers('med-sheet', { start: 0, end: 4 }),
             repeat: -1
+        });
+        this.anims.create({
+            key: 'complete-anim',
+            frameRate: 24,
+            frames: this.anims.generateFrameNumbers('complete-sheet', { start: 0, end: 6 }),
+            repeat: 0
         });
 
         // GAME VARIABLES
@@ -114,6 +127,13 @@ class Medicine extends Phaser.Scene {
             0)
             .setOrigin(1, 1);
         this.anim.play('display-anim');
+        this.completeAnim = this.add.sprite(
+            game.config.width/2, 
+            game.config.height/2, 
+            'complete-sheet', 
+            0)
+	        .setOrigin(0.5, 0.5);
+        this.completeAnim.visible = false;
 
         // TIME INTERVALS
         this.playerDescend = this.time.addEvent({
@@ -208,6 +228,14 @@ class Medicine extends Phaser.Scene {
         if (this.player.y == this.WALL_START_Y) {
             this.playerDescend.paused = true;
             this.pillShake.paused = false;
+            this.completeEvent = this.time.addEvent({
+                callback: () => {
+                    this.completeAnim.visible = true;
+                    this.completeAnim.play('complete-anim');
+                },
+                callbackScope: this,
+                delay: 2000
+            });
             this.end.paused = false;
         }
 

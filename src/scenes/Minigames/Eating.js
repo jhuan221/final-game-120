@@ -42,14 +42,19 @@ class Eating extends Phaser.Scene {
                 frameHeight: 85
             }
         });
+        this.load.spritesheet({
+            key: 'complete-sheet',
+            url: './assets/Complete_Sheet.png',
+            frameConfig: {
+                frameWidth: 665,
+                frameHeight: 665
+            }
+        });
 
         this.load.audio('eating-audio', './assets/audio/new sound/eat.wav');
     }
 
-    create(data) {
-        if (data.music) {
-            data.music.play();
-        }
+    create() {
         // SCENE SETUP
         this.physics.world.gravity.y = 0; // CHANGES TO 200 AFTER INSTRUCTIONS ARE DISPLAYED
         this.scrollspeed = 200;
@@ -57,6 +62,10 @@ class Eating extends Phaser.Scene {
         this.keySPC.enabled = false;
         this.background = this.add.sprite(0, -80, 'eatBG').setOrigin(0,0);
         this.eatingAudio = this.sound.add('eating-audio', { volume: 0.5 });
+
+        this.completeAnim = this.add.sprite(game.config.width/2, game.config.height/2, 'complete-sheet', 0)
+	        .setOrigin(0.5, 0.5);
+        this.completeAnim.visible = false;
 
         // PLAYER SETTINGS
         this.player = this.physics.add.sprite(this.PLAYER_START_X, this.PLAYER_START_Y, 'plane');
@@ -124,12 +133,17 @@ class Eating extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers('eating-space-sheet', { start: 0, end: 7 }),
             repeat: -1
         });
-
         this.anims.create({
             key: 'eating-anim',
             frameRate: 3,
             frames: this.anims.generateFrameNumbers('eating-sheet', { start: 0, end: 4 }),
             repeat: -1
+        });
+        this.anims.create({
+            key: 'complete-anim',
+            frameRate: 24,
+            frames: this.anims.generateFrameNumbers('complete-sheet', { start: 0, end: 6 }),
+            repeat: 0
         });
 
         this.anim = this.add.sprite(
@@ -234,6 +248,14 @@ class Eating extends Phaser.Scene {
         }
 
         if (this.progress >= 30) {
+            this.completeEvent = this.time.addEvent({
+                callback: () => {
+                    this.completeAnim.visible = true;
+                    this.completeAnim.play('complete-anim');
+                },
+                callbackScope: this,
+                delay: 2000
+            });
             this.end.paused = false;
         }
     }

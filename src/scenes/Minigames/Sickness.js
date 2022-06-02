@@ -29,6 +29,14 @@ class Sickness extends Phaser.Scene {
                 frameHeight: 110
             }
         });
+        this.load.spritesheet({
+            key: 'complete-sheet',
+            url: './assets/Complete_Sheet.png',
+            frameConfig: {
+                frameWidth: 665,
+                frameHeight: 665
+            }
+        });
 
         // MAIN UI
         this.load.image('arrow', './assets/Sick/Arrow.png');
@@ -67,7 +75,6 @@ class Sickness extends Phaser.Scene {
                 frameHeight: 201
             }
         });
-
         this.load.spritesheet({
             key: 'healthbar-sheet',
             url: './assets/Sick/Health_Bar_Sheet.png',
@@ -181,6 +188,9 @@ class Sickness extends Phaser.Scene {
             .setScale(0.8, 0.8)
             .setOrigin(0.5, 0.5);
         this.victoryText.visible = false;
+        this.completeAnim = this.add.sprite(game.config.width/2, game.config.height/2, 'complete-sheet', 0)
+	        .setOrigin(0.5, 0.5);
+        this.completeAnim.visible = false;
         
         // ATTACK UI
         this.attackText = this.add.sprite(this.fightText.x + 60, this.fightText.y, 'attack-text')
@@ -252,28 +262,24 @@ class Sickness extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers('sick-arrows-sheet', { start: 0, end: 11 }),
             repeat: -1
         });
-
         this.anims.create({
             key: 'sick-display-space',
             frameRate: 10,
             frames: this.anims.generateFrameNumbers('sick-space-sheet', { start: 0, end: 7 }),
             repeat: -1
         });
-
         this.anims.create({
             key: 'take-damage',
             frameRate: 7,
             frames: this.anims.generateFrameNumbers('enemy-damage-sheet', { start: 0, end: 3 }),
             repeat: 0
         });
-
         this.anims.create({
             key: 'drop-health',
             frameRate: 24,
             frames: this.anims.generateFrameNumbers('healthbar-sheet', { start: 0, end: 15}),
             repeat: 0
         });
-
         this.anims.create({
             key: 'sick-anim',
             frameRate: 3,
@@ -287,8 +293,23 @@ class Sickness extends Phaser.Scene {
             0)
             .setOrigin(1, 1);
         this.anim.play('sick-anim');
+        this.anims.create({
+            key: 'complete-anim',
+            frameRate: 24,
+            frames: this.anims.generateFrameNumbers('complete-sheet', { start: 0, end: 6 }),
+            repeat: 0
+        });
 
         // TIME EVENTS
+        this.completeEvent = this.time.addEvent({
+            callback: () => {
+                this.completeAnim.visible = true;
+                this.completeAnim.play('complete-anim');
+            },
+            callbackScope: this,
+            delay: 2000,
+            paused: true
+        });
         this.end = this.time.addEvent({
             callback: () => {
                 this.BG_Audio.stop();
@@ -298,7 +319,6 @@ class Sickness extends Phaser.Scene {
             delay: 4000,
             paused: true
         });
-
         this.enemyDefeatedEvent = this.time.addEvent({
             callback: () => {
                 this.superText.visible = false;
@@ -309,7 +329,6 @@ class Sickness extends Phaser.Scene {
             loop: false,
             paused: true
         });
-
         this.enemyDisappearConfig = {
             callback: () => {
                 this.enemy.alpha -= 0.1;
@@ -317,15 +336,14 @@ class Sickness extends Phaser.Scene {
             delay: 50,
             loop: true
         }
-
         this.enemyDisappearDelayConfig = {
             callback: () => {
+                this.completeEvent.paused = false;
                 this.enemyDisappear = this.time.addEvent(this.enemyDisappearConfig);
             },
             delay: 1000,
             loop: false
         }
-
         this.dropHealthEvent = this.time.addEvent({
             callback: () => {
                 this.enemy.play('take-damage');
@@ -338,7 +356,6 @@ class Sickness extends Phaser.Scene {
             loop: false,
             paused: true
         });
-
         this.hideDeniedEventConfig = {
             callback: () => {
                 this.deniedText.visible = false;
@@ -346,7 +363,6 @@ class Sickness extends Phaser.Scene {
             delay: 1500,
             loop: false
         }
-
         this.showDeniedEventConfig = {
             callback: () => {
                 this.deniedText.visible = true;
@@ -424,15 +440,6 @@ class Sickness extends Phaser.Scene {
             loop: false,
             repeat: 8
         }
-
-        // this.end = this.time.addEvent({
-        //     callback: () => {
-        //         this.scene.start(this.nextScene, { pg: this.pg });
-        //     },
-        //     delay: 4000,
-        //     paused: true
-        // });
-
     }
 
     update() {

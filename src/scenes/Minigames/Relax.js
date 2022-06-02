@@ -45,6 +45,14 @@ class Relax extends Phaser.Scene {
                 frameHeight: 85
             }
         });
+        this.load.spritesheet({
+            key: 'complete-sheet',
+            url: './assets/Complete_Sheet.png',
+            frameConfig: {
+                frameWidth: 665,
+                frameHeight: 665
+            }
+        });
 
         // AUDIO
         this.load.audio('left-audio', './assets/audio/new sound/Bird_01.wav');
@@ -89,6 +97,10 @@ class Relax extends Phaser.Scene {
             delay: 100,
             loop: true
         });
+
+        this.completeAnim = this.add.sprite(game.config.width/2, game.config.height/2, 'complete-sheet', 0)
+	        .setOrigin(0.5, 0.5);
+        this.completeAnim.visible = false;
         
         let x = 50;
         let width = 119
@@ -157,13 +169,13 @@ class Relax extends Phaser.Scene {
             frameRate: 10,
             frames: this.anims.generateFrameNumbers('relax-arrows-sheet', { start: 0, end: 11 }),
             repeat: -1
-        })
+        });
         this.anims.create({
             key: 'relax-anim',
             frameRate: 3,
             frames: this.anims.generateFrameNumbers('relax-sheet', { start: 0, end: 4 }),
             repeat: -1
-        })
+        });
         this.anim = this.add.sprite(
             game.config.width, 
             game.config.height, 
@@ -171,6 +183,12 @@ class Relax extends Phaser.Scene {
             0)
             .setOrigin(1, 1);
         this.anim.play('relax-anim');
+        this.anims.create({
+            key: 'complete-anim',
+            frameRate: 24,
+            frames: this.anims.generateFrameNumbers('complete-sheet', { start: 0, end: 6 }),
+            repeat: 0
+        });
 
         // INSTRUCTIONS
         this.instructionBG = this.add.image(game.config.width/2, game.config.height/2, 'relax-instructionBG')
@@ -248,6 +266,16 @@ class Relax extends Phaser.Scene {
             delay: 4000,
             paused: true
         });
+
+        this.completeEvent = this.time.addEvent({
+            callback: () => {
+                this.completeAnim.visible = true;
+                this.completeAnim.play('complete-anim');
+            },
+            callbackScope: this,
+            delay: 2000,
+            paused: true
+        });
     }
 
     update() {
@@ -298,6 +326,7 @@ class Relax extends Phaser.Scene {
 
         if (this.score >= 40) {
             this.endAudio.paused = false;
+            this.completeEvent.paused = false;
             this.end.paused = false;
         }
     }

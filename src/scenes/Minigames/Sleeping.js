@@ -42,6 +42,14 @@ class Sleeping extends Phaser.Scene {
                 frameHeight: 85
             }
         });
+        this.load.spritesheet({
+            key: 'complete-sheet',
+            url: './assets/Complete_Sheet.png',
+            frameConfig: {
+                frameWidth: 665,
+                frameHeight: 665
+            }
+        });
     }
 
     create() {
@@ -64,6 +72,10 @@ class Sleeping extends Phaser.Scene {
         
         this.physics.add.collider(this.sheep, this.fence);
         this.physics.add.collider(this.sheep, this.ground);
+
+        this.completeAnim = this.add.sprite(game.config.width/2, game.config.height/2, 'complete-sheet', 0)
+	        .setOrigin(0.5, 0.5);
+        this.completeAnim.visible = false;
         
         // GAME LOGIC VARIABLES
         this.successCount = 0;
@@ -103,6 +115,12 @@ class Sleeping extends Phaser.Scene {
             0)
             .setOrigin(1, 1);
         this.anim.play('sleep-anim');
+        this.anims.create({
+            key: 'complete-anim',
+            frameRate: 24,
+            frames: this.anims.generateFrameNumbers('complete-sheet', { start: 0, end: 6 }),
+            repeat: 0
+        });
 
         // INSTRUCTIONS
         this.instructionBG = this.add.image(game.config.width/2, game.config.height/2, 'sleep-instructionBG')
@@ -156,6 +174,16 @@ class Sleeping extends Phaser.Scene {
         }
 
         this.displayInstructions = this.time.addEvent(this.displayInstructionsConfig);
+
+        this.completeEvent = this.time.addEvent({
+            callback: () => {
+                this.completeAnim.visible = true;
+                this.completeAnim.play('complete-anim');
+            },
+            callbackScope: this,
+            delay: 2000,
+            paused: true
+        });
     }
 
     update() {
@@ -167,6 +195,7 @@ class Sleeping extends Phaser.Scene {
                 this.fence.setScale(1,2.25);
                 break;
             case 3:
+                this.completeEvent.paused = false;
                 this.end = this.time.addEvent({
                     callback: () => {
                         this.scene.start(this.nextScene, { pg: this.pg });
