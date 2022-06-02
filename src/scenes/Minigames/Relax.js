@@ -280,6 +280,9 @@ class Relax extends Phaser.Scene {
     }
 
     update() {
+        if (game.config.HEALTH > 17)
+            this.scene.stop();
+
         for (let i = 0; i < this.arrowArray.length; i += 1) {
             this.arrowArray[i].obj.y -= 3;
             

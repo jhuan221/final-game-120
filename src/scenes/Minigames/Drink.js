@@ -194,9 +194,9 @@ class DrinkWater extends Phaser.Scene {
     }
 
     update() {
-        // if (Phaser.Input.Keyboard.JustDown(this.keyESC)) {
-        //     this.scene.stop('baby_drinkwater').start('s_overview');
-        // }
+        if (game.config.HEALTH > 17)
+            this.scene.stop();
+        
         // water [hold spacebar] functionality
         this.drinkWater(this.drinkTimer);
         // if (this.done){

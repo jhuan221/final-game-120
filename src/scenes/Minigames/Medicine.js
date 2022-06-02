@@ -234,6 +234,9 @@ class Medicine extends Phaser.Scene {
     }
 
     update() {
+        if (game.config.HEALTH > 17)
+            this.scene.stop();
+
         this.player.x = this.PLAYER_POS[this.index];
 
         if (this.player.y == this.WALL_START_Y) {

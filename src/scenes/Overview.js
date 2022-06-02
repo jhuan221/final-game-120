@@ -75,7 +75,7 @@ class Overview extends Phaser.Scene {
         });
 
         this.human_body = this.add.sprite(game.config.width/2, game.config.height/2, 'human-body');
-        this.healthbar = this.add.sprite(this.human_body.x, this.human_body.y + 250, 'mainHealthBar-sheet', this.HEALTH).setOrigin(0.5, 0.5);
+        this.healthbar = this.add.sprite(this.human_body.x, this.human_body.y + 250, 'mainHealthBar-sheet', game.config.HEALTH).setOrigin(0.5, 0.5);
         
         this.healthCritical = this.time.addEvent({
             callback: () => {
@@ -88,16 +88,10 @@ class Overview extends Phaser.Scene {
 
         this.healthTime = this.time.addEvent({
             callback: () => {
-                this.HEALTH += 1;
-                if (this.HEALTH == 17) {
-                    this.healthCritical.paused = false;
-                }
-                if (this.HEALTH > 17) {
-                    this.BG_Audio.stop();
-                    this.scene.start('s_gameover');
-                }
+                game.config.HEALTH += 1;
+                console.log(game.config.HEALTH);
             },
-            delay: 16600,
+            delay: 1000,
             loop: true
         });
 
@@ -135,8 +129,15 @@ class Overview extends Phaser.Scene {
     }
 
     update() {
-        if (this.HEALTH < 18)
-            this.healthbar.setFrame(this.HEALTH, false, false);
+        if (game.config.HEALTH < 18)
+            this.healthbar.setFrame(game.config.HEALTH, false, false);
+        if (game.config.HEALTH == 17) 
+            this.healthCritical.paused = false;
+        if (game.config.HEALTH > 17) {
+            this.BG_Audio.stop();
+            this.scene.start('s_gameover');
+        }
+            
         switch (this.progressCounter) {
             case 0:
                 this.startScene = this.dt;

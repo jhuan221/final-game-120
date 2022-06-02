@@ -234,6 +234,9 @@ class Eating extends Phaser.Scene {
     }
 
     update() {
+        if (game.config.HEALTH > 17)
+            this.scene.stop();
+
         switch (this.keySPC.isDown) {
             case true:
                 this.player.body.setAccelerationY(this.PLAYER_ACCEL_Y);

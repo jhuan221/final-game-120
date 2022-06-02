@@ -444,6 +444,9 @@ class Sickness extends Phaser.Scene {
     }
 
     update() {
+        if (game.config.HEALTH > 17)
+            this.scene.stop();
+
         if (this.viewIntro &&
             (this.enemy.x < this.ENEMY_FINAL_X &&
             this.whiteCell.x > this.WHITE_CELL_FINAL_X)) {

@@ -164,6 +164,9 @@ class Vomiting extends Phaser.Scene {
        
 
     update() {
+        if (game.config.HEALTH > 17)
+            this.scene.stop();
+
         this.counter = Phaser.Input.Keyboard.JustDown(keySp) ? this.counter + 1 : this.counter;
         switch (this.counter == 5) {
             case true: 

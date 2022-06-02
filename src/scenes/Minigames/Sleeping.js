@@ -188,6 +188,9 @@ class Sleeping extends Phaser.Scene {
     }
 
     update() {
+        if (game.config.HEALTH > 17)
+            this.scene.stop();
+
         switch (this.successCount) {
             case 1:
                 this.fence.setScale(1,1.7);

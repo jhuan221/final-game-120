@@ -21,7 +21,7 @@ let config = {
         Overview,
         Game_Over,
         Medicine,
-         DrinkWater,
+        DrinkWater,
         Sickness,
         Relax,
         Vomiting,
@@ -32,6 +32,8 @@ let config = {
 }
 
 let game = new Phaser.Game(config);
+
+game.config.HEALTH = 0;
 
 let keyLt, keyRt, keyUp, keyDn, keySp, keyEnter, keyM, keyR;
 
