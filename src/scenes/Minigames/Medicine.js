@@ -211,6 +211,12 @@ class Medicine extends Phaser.Scene {
             this.end.paused = false;
         }
 
+        if ((this.player.y > this.BAD_SPOT1) && this.index == 6) {
+            this.controls.forEach((elem) => {
+                elem.enabled = false;
+            })
+        }
+
         if ((this.player.y == this.BAD_SPOT1) && (this.index == 0 || 
             (this.index > 2 && this.index < 6))) {
                 this.controls.forEach((elem) => {
