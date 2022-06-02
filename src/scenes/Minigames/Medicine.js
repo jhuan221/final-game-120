@@ -214,6 +214,16 @@ class Medicine extends Phaser.Scene {
             paused: true
         })
 
+        this.completeEvent = this.time.addEvent({
+            callback: () => {
+                this.completeAnim.visible = true;
+                this.completeAnim.play('med-complete-anim');
+            },
+            callbackScope: this,
+            delay: 1000,
+            paused: true
+        });
+
         this.end = this.time.addEvent({
             callback: () => {
                 this.scene.start('s_overview', { pg: this.pg });
@@ -229,14 +239,7 @@ class Medicine extends Phaser.Scene {
         if (this.player.y == this.WALL_START_Y) {
             this.playerDescend.paused = true;
             this.pillShake.paused = false;
-            this.completeEvent = this.time.addEvent({
-                callback: () => {
-                    this.completeAnim.visible = true;
-                    this.completeAnim.play('med-complete-anim');
-                },
-                callbackScope: this,
-                delay: 2000
-            });
+            this.completeEvent.paused = false;
             this.end.paused = false;
         }
 
