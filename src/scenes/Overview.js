@@ -89,7 +89,6 @@ class Overview extends Phaser.Scene {
         this.healthTime = this.time.addEvent({
             callback: () => {
                 game.config.HEALTH += 1;
-                console.log(game.config.HEALTH);
             },
             delay: 1000,
             loop: true
@@ -129,6 +128,8 @@ class Overview extends Phaser.Scene {
     }
 
     update() {
+        if (game.config.GRADER)
+            this.healthTime.paused = true;
         if (game.config.HEALTH < 18)
             this.healthbar.setFrame(game.config.HEALTH, false, false);
         if (game.config.HEALTH == 17) 

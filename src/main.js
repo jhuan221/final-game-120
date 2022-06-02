@@ -34,7 +34,8 @@ let config = {
 let game = new Phaser.Game(config);
 
 game.config.HEALTH = 0;
+game.config.GRADER = false;
 
-let keyLt, keyRt, keyUp, keyDn, keySp, keyEnter, keyM, keyR;
+let keyG, keyLt, keyRt, keyUp, keyDn, keySp, keyEnter, keyM, keyR;
 
 
