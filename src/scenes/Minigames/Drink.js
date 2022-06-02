@@ -11,9 +11,9 @@ class DrinkWater extends Phaser.Scene {
 
     preload() {
         // INSTRUCTIONS
-        this.load.image('drink-title-text', './assets/Drink/Drink_Instructions/Drink_Text.png');
-        this.load.image('drink-instructionBG', './assets/Drink/Drink_Instructions/Instruction_Background.png');
-        this.load.image('space-text', './assets/Drink/Drink_Instructions/Drink_Space.png');
+        this.load.image('drink-title-text', './assets/drink/Drink_Instructions/Drink_Text.png');
+        this.load.image('drink-instructionBG', './assets/drink/Drink_Instructions/Instruction_Background.png');
+        this.load.image('space-text', './assets/drink/Drink_Instructions/Drink_Space.png');
 
         // water [hold spacebar] game sprite
         this.load.audio('glass-clink', './assets/audio/minigame_sfx/BABY/Glass-Clink.wav');

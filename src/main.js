@@ -28,7 +28,7 @@ let config = {
         Eating,
         Sleeping, 
         Final
-    ]
+    ],
 }
 
 let game = new Phaser.Game(config);
