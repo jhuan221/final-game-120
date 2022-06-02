@@ -43,6 +43,14 @@ class DrinkWater extends Phaser.Scene {
                 frameHeight: 85
             }
         });
+        this.load.spritesheet({
+            key: 'complete-sheet',
+            url: './assets/Complete_Sheet.png',
+            frameConfig: {
+                frameWidth: 665,
+                frameHeight: 665
+            }
+        });
     }
 
     create() {
@@ -56,7 +64,10 @@ class DrinkWater extends Phaser.Scene {
             .setOrigin(0.5, 0.5);
         this.drinkAnim = this.add.sprite(game.config.width, game.config.height, 'drink-sheet', 0)
             .setOrigin(1, 1);
-        
+        this.completeAnim = this.add.sprite(game.config.width/2, game.config.height/2, 'complete-sheet', 0)
+            .setOrigin(0.5, 0.5);
+        this.completeAnim.visible = false;
+
         // ANIMATIONS
         this.anims.create({
             key: 'drink-anim',
@@ -65,6 +76,13 @@ class DrinkWater extends Phaser.Scene {
             repeat: -1
         });
         this.drinkAnim.play('drink-anim');
+
+        this.anims.create({
+            key: 'complete-anim',
+            frameRate: 24,
+            frames: this.anims.generateFrameNumbers('complete-sheet', { start: 0, end: 6 }),
+            repeat: 0
+        });
 
         // GAME VARIABLES
         this.frame = 0;
@@ -100,6 +118,14 @@ class DrinkWater extends Phaser.Scene {
                         }
                     );
                     this.clinkAudio.play();
+                    this.completeEvent = this.time.addEvent({
+                        callback: () => {
+                            this.completeAnim.visible = true;
+                            this.completeAnim.play('complete-anim');
+                        },
+                        callbackScope: this,
+                        delay: 2000
+                    });
                     this.end = this.time.addEvent({
                         callback: () => {
                             this.scene.start(this.nextScene, { pg: this.pg });

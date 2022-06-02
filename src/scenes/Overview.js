@@ -3,7 +3,7 @@ class Overview extends Phaser.Scene {
     constructor() {
         super('s_overview');
 
-        this.progressCounter = 0;
+        this.progressCounter = 15;
         this.gamestart = false;
         this.BG_Audio;
     }
