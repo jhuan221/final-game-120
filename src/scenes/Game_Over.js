@@ -35,7 +35,8 @@ class Game_Over extends Phaser.Scene {
 
     update() {
         if (this.playending){
-            this.sound.play('sfx_slowdown');
+            this.endSound = this.sound.add('sfx_slowdown', { volume: 0.4 });
+            this.endSound.play();
             let ending = this.add.sprite(game.config.width/2, game.config.height/2, 'end');
             ending.anims.play('bad_end');
             this.playending = false;

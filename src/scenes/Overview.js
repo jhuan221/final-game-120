@@ -3,7 +3,7 @@ class Overview extends Phaser.Scene {
     constructor() {
         super('s_overview');
 
-        this.HEALTH = 0;
+        this.HEALTH = 16;
         this.progressCounter = 0;
         this.gamestart = false;
         this.BG_Audio;
@@ -77,9 +77,21 @@ class Overview extends Phaser.Scene {
         this.human_body = this.add.sprite(game.config.width/2, game.config.height/2, 'human-body');
         this.healthbar = this.add.sprite(this.human_body.x, this.human_body.y + 250, 'mainHealthBar-sheet', this.HEALTH).setOrigin(0.5, 0.5);
         
+        this.healthCritical = this.time.addEvent({
+            callback: () => {
+                this.healthbar.visible = !this.healthbar.visible;
+            },
+            delay: 250,
+            loop: true,
+            paused: true
+        });
+
         this.healthTime = this.time.addEvent({
             callback: () => {
                 this.HEALTH += 1;
+                if (this.HEALTH == 17) {
+                    this.healthCritical.paused = false;
+                }
                 if (this.HEALTH > 17) {
                     this.BG_Audio.stop();
                     this.scene.start('s_gameover');
@@ -123,7 +135,8 @@ class Overview extends Phaser.Scene {
     }
 
     update() {
-        this.healthbar.setFrame(this.HEALTH, false, false);
+        if (this.HEALTH < 18)
+            this.healthbar.setFrame(this.HEALTH, false, false);
         switch (this.progressCounter) {
             case 0:
                 this.startScene = this.dt;
