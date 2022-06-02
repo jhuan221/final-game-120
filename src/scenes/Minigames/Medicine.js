@@ -23,7 +23,7 @@ class Medicine extends Phaser.Scene {
         });
 
         // MAIN UI
-        this.load.image('medBG', '/assets/Med/Med_Background.png');
+        this.load.image('medBG', './assets/Med/Med_Background.png');
         this.load.image('leftWall', './assets/Med/Med_Left_Wall.png');
         this.load.image('rightWall', './assets/Med/Med_Right_Wall.png');
         this.load.image('player', './assets/Med/Med_Player_New.png');
