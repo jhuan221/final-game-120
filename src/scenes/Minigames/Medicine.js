@@ -11,10 +11,10 @@ class Medicine extends Phaser.Scene {
 
     preload() {
         // INSTRUCTIONS
-        this.load.image('title-text', './assets/Med/Med_Instructions/Med_Text.png');
-        this.load.image('instructionBG', './assets/Med/Med_Instructions/Instruction_Background.png');
+        this.load.image('med-title-text', './assets/Med/Med_Instructions/Med_Text.png');
+        this.load.image('med-instructionBG', './assets/Med/Med_Instructions/Instruction_Background.png');
         this.load.spritesheet({
-            key: 'arrows-sheet',
+            key: 'med-arrows-sheet',
             url: './assets/Med/Med_Instructions/Med_Key_Sheet.png',
             frameConfig: {
                 frameWidth: 304,
@@ -35,6 +35,8 @@ class Medicine extends Phaser.Scene {
                 frameHeight: 85
             }
         });
+
+        this.load.audio('pill-shake', './assets/audio/new sound/medicine.wav');
     }
 
     create() {
@@ -71,9 +73,9 @@ class Medicine extends Phaser.Scene {
 
         // ANIMATIONS
         this.anims.create({
-            key: 'display-arrows',
+            key: 'med-display-arrows',
             frameRate: 10,
-            frames: this.anims.generateFrameNumbers('arrows-sheet', { start: 0, end: 5 }),
+            frames: this.anims.generateFrameNumbers('med-arrows-sheet', { start: 0, end: 5 }),
             repeat: -1
         });
         
@@ -135,14 +137,14 @@ class Medicine extends Phaser.Scene {
         };
 
         // INSTRUCTIONS
-        this.instructionBG = this.add.image(game.config.width/2, game.config.height/2, 'instructionBG')
+        this.instructionBG = this.add.image(game.config.width/2, game.config.height/2, 'med-instructionBG')
             .setOrigin(0.5, 0.5);
-        this.title = this.add.image(this.instructionBG.x, (3*game.config.height)/10, 'title-text')
+        this.title = this.add.image(this.instructionBG.x, (3*game.config.height)/10, 'med-title-text')
             .setOrigin(0.5, 0.5);
-        this.arrowKeys = this.add.sprite(this.instructionBG.x, (game.config.height/2) + 25, 'arrows-sheet', 0)
+        this.arrowKeys = this.add.sprite(this.instructionBG.x, (game.config.height/2) + 25, 'med-arrows-sheet', 0)
             .setScale(0.7, 0.7)
             .setOrigin(0.5, 0.5);
-        this.arrowKeys.play('display-arrows');
+        this.arrowKeys.play('med-display-arrows');
 
         this.instructions = [
             this.instructionBG,
@@ -183,13 +185,21 @@ class Medicine extends Phaser.Scene {
 
         this.displayInstructions = this.time.addEvent(this.displayInstructionsConfig);
 
+        this.pillShake = this.time.addEvent({
+            callback: () => {
+                this.pillShakeAudio = this.sound.add('pill-shake', { volume: 0.5 });
+                this.pillShakeAudio.play();
+            },
+            paused: true
+        })
+
         this.end = this.time.addEvent({
             callback: () => {
                 this.scene.start('s_overview', { pg: this.pg });
             },
-            delay: 2000
+            delay: 4000,
+            paused: true
         });
-        this.end.paused = true;
     }
 
     update() {
@@ -197,6 +207,7 @@ class Medicine extends Phaser.Scene {
 
         if (this.player.y == this.WALL_START_Y) {
             this.playerDescend.paused = true;
+            this.pillShake.paused = false;
             this.end.paused = false;
         }
 

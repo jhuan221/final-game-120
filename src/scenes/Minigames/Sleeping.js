@@ -18,10 +18,10 @@ class Sleeping extends Phaser.Scene {
 
     preload() {
         // INSTRUCTIONS
-        this.load.image('title-text', './assets/Sleep/Sleep_Instructions/Sleep_Text.png');
-        this.load.image('instructionBG', './assets/Sleep/Sleep_Instructions/Instruction_Background.png');
+        this.load.image('sleep-title-text', './assets/Sleep/Sleep_Instructions/Sleep_Text.png');
+        this.load.image('sleep-instructionBG', './assets/Sleep/Sleep_Instructions/Instruction_Background.png');
         this.load.spritesheet({
-            key: 'space-sheet',
+            key: 'sleep-space-sheet',
             url: './assets/Sleep/Sleep_Instructions/Sleep_Space_Sheet.gif',
             frameConfig: {
                 frameWidth: 304,
@@ -53,7 +53,7 @@ class Sleeping extends Phaser.Scene {
         this.nightsky = this.add.sprite(0, 0, 'nightsky').setOrigin(0,0);
         this.curtains = this.add.sprite(0, 0, 'curtains').setOrigin(0,0);
         this.sheep = this.physics.add.sprite(this.SHEEP_START_X, this.SHEEP_START_Y, 'sheep').setOrigin(0,1).setScale(0.5,0.5);
-        this.sheep.setVelocityX(100,0);
+        this.sheep.setVelocityX(150,0);
         this.sheep.setGravity(0,300);
         this.fence = this.physics.add.sprite(this.FENCE_START_X, game.config.height-100, 'fence').setOrigin(0.5,1);
         this.fence.body.immovable = true;
@@ -84,9 +84,9 @@ class Sleeping extends Phaser.Scene {
 
         // ANIMATIONS
         this.anims.create({
-            key: 'display-space',
+            key: 'sleep-display-space',
             frameRate: 10,
-            frames: this.anims.generateFrameNumbers('space-sheet', { start: 0, end: 7 }),
+            frames: this.anims.generateFrameNumbers('sleep-space-sheet', { start: 0, end: 7 }),
             repeat: -1
         });
 
@@ -105,18 +105,18 @@ class Sleeping extends Phaser.Scene {
         this.anim.play('sleep-anim');
 
         // INSTRUCTIONS
-        this.instructionBG = this.add.image(game.config.width/2, game.config.height/2, 'instructionBG')
+        this.instructionBG = this.add.image(game.config.width/2, game.config.height/2, 'sleep-instructionBG')
             .setOrigin(0.5, 0.5);
-        this.title = this.add.image(this.instructionBG.x, (3*game.config.height)/10, 'title-text')
+        this.title = this.add.image(this.instructionBG.x, (3*game.config.height)/10, 'sleep-title-text')
             .setOrigin(0.5, 0.5);
         // this.arrowKeys = this.add.sprite(this.instructionBG.x, (game.config.height/2) + 25, 'arrows-sheet', 0)
         //     .setScale(0.7, 0.7)
         //     .setOrigin(0.5, 0.5);
         // this.arrowKeys.play('display-arrows');
-        this.spaceKey = this.add.sprite(this.instructionBG.x, game.config.height/2 + 25, 'space-sheet', 0)
+        this.spaceKey = this.add.sprite(this.instructionBG.x, game.config.height/2 + 25, 'sleep-space-sheet', 0)
             .setScale(0.7, 0.7)
             .setOrigin(0.5, 0.5);
-        this.spaceKey.play('display-space');
+        this.spaceKey.play('sleep-display-space');
         
         this.instructions = [
             this.instructionBG,
@@ -171,7 +171,7 @@ class Sleeping extends Phaser.Scene {
                     callback: () => {
                         this.scene.start(this.nextScene, { pg: this.pg });
                     },
-                    delay: 2000
+                    delay: 4000
                 })
         }
         if (this.keySPC.isDown && this.sheep.body.touching.down) {

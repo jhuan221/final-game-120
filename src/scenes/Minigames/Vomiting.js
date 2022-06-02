@@ -11,10 +11,10 @@ class Vomiting extends Phaser.Scene {
 
     preload() {
         // INSTRUCTIONS
-        this.load.image('title-text', './assets/Vomit/Vomit_Instructions/Vomit_Text.png');
-        this.load.image('instructionBG', './assets/Vomit/Vomit_Instructions/Instruction_Background.png');
+        this.load.image('vomit-title-text', './assets/Vomit/Vomit_Instructions/Vomit_Text.png');
+        this.load.image('vomit-instructionBG', './assets/Vomit/Vomit_Instructions/Instruction_Background.png');
         this.load.spritesheet({
-            key: 'space-sheet',
+            key: 'vomit-space-sheet',
             url: './assets/Vomit/Vomit_Instructions/Vomit_Space_Sheet.png',
             frameConfig: {
                 frameWidth: 304,
@@ -50,9 +50,9 @@ class Vomiting extends Phaser.Scene {
 
         // ANIMATIONS
         this.anims.create({
-            key: 'display-space',
+            key: 'vomit-display-space',
             frameRate: 10,
-            frames: this.anims.generateFrameNumbers('space-sheet', { start: 0, end: 3 }),
+            frames: this.anims.generateFrameNumbers('vomit-space-sheet', { start: 0, end: 3 }),
             repeat: -1
         })
         this.anims.create({
@@ -77,14 +77,14 @@ class Vomiting extends Phaser.Scene {
         this.vpipe = this.add.sprite(game.config.width/2, game.config.height/2, 'pipe-sheet', this.frame).setScale(0.9, 0.9);
     
         // INSTRUCTIONS
-        this.instructionBG = this.add.image(game.config.width/2, game.config.height/2, 'instructionBG')
+        this.instructionBG = this.add.image(game.config.width/2, game.config.height/2, 'vomit-instructionBG')
             .setOrigin(0.5, 0.5);
-        this.title = this.add.image(this.instructionBG.x, (3*game.config.height)/10, 'title-text')
+        this.title = this.add.image(this.instructionBG.x, (3*game.config.height)/10, 'vomit-title-text')
             .setOrigin(0.5, 0.5);
-        this.spaceKey = this.add.sprite(this.instructionBG.x, (game.config.height/2) + 25, 'space-sheet', 0)
+        this.spaceKey = this.add.sprite(this.instructionBG.x, (game.config.height/2) + 25, 'vomit-space-sheet', 0)
             .setScale(0.7, 0.7)
             .setOrigin(0.5, 0.5);
-        this.spaceKey.play('display-space');
+        this.spaceKey.play('vomit-display-space');
         
         this.instructions = [
             this.instructionBG,
@@ -129,9 +129,9 @@ class Vomiting extends Phaser.Scene {
             callback: () => {
                 this.scene.start(this.nextScene, { pg: this.pg });
             },
-            delay: 2000
+            delay: 4000,
+            paused: true
         });
-        this.end.paused = true;
     }
        
 

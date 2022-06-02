@@ -3,9 +3,9 @@ class Overview extends Phaser.Scene {
     constructor() {
         super('s_overview');
 
-        this.progressCounter = 0;
+        this.progressCounter = 7;
         this.gamestart = false;
-        this.musicPaused = false;
+        this.BG_Audio;
     }
 
     init(data) {
@@ -38,23 +38,19 @@ class Overview extends Phaser.Scene {
     }
 
     create() {
-        console.log(this.gamestart);
-        this.BG_Audio = this.sound.add(
-            'heartbeat', 
-            { 
-                volume: 0.2,
-                loop: true
-            }
-        );
+        this.sceneTracker = this.ov;
+        this.critical = false;
         
         if (!this.gamestart && !this.sound.locked) {
+            this.BG_Audio = this.sound.add(
+                'heartbeat', 
+                { 
+                    volume: 0.2,
+                    loop: true
+                }
+            );
             this.BG_Audio.play();
             this.gamestart = true;
-        }
-        else {
-            this.sound.once(Phaser.Sound.Events.UNLOCKED, () => {
-                this.BG_Audio.play();
-            });
         }
         
         // ANIMATIONS
@@ -86,9 +82,6 @@ class Overview extends Phaser.Scene {
         this.sl = 's_sleeping',
         this.vt = 's_vomiting'
 
-        this.sceneTracker = this.ov;
-        this.muteAudio = false;
-
         this.startScene = this.dt;
         this.nextScene = this.ov;
         this.nextScene2 = null;
@@ -102,13 +95,10 @@ class Overview extends Phaser.Scene {
             .setScale(0.5,0.5)
             .setInteractive({ useHandCursor: true })
             .on('pointerdown', () => {
-                this.BG_Audio.mute = this.muteAudio ? true : false; 
-                this.goToNextScene(this.startScene, this.nextScene, this.nextScene2);
+                this.goToNextScene(this.startScene, this.nextScene, this.nextScene2, this.BG_Audio);
             }, this);
             this.taskBtn.play('task-anim');
         
-        //this.progressCounter = 3;
-        console.log(this.progressCounter);
     }
 
     update() {
@@ -214,6 +204,6 @@ class Overview extends Phaser.Scene {
     }
 
     goToNextScene(start, nextScene, nextScene2) {
-        this.scene.sleep(this.ov).start(start, { next: nextScene, pg: 1, next2: nextScene2 });
+        this.scene.start(start, { next: nextScene, pg: 1, next2: nextScene2, music: this.BG_Audio });
     }
 }

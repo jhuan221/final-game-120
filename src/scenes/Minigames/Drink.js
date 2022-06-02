@@ -11,8 +11,8 @@ class DrinkWater extends Phaser.Scene {
 
     preload() {
         // INSTRUCTIONS
-        this.load.image('title-text', './assets/Drink/Drink_Instructions/Drink_Text.png');
-        this.load.image('instructionBG', './assets/Drink/Drink_Instructions/Instruction_Background.png');
+        this.load.image('drink-title-text', './assets/Drink/Drink_Instructions/Drink_Text.png');
+        this.load.image('drink-instructionBG', './assets/Drink/Drink_Instructions/Instruction_Background.png');
         this.load.image('space-text', './assets/Drink/Drink_Instructions/Drink_Space.png');
 
         // water [hold spacebar] game sprite
@@ -105,7 +105,7 @@ class DrinkWater extends Phaser.Scene {
                             this.scene.start(this.nextScene, { pg: this.pg });
                         },
                         callbackScope: this,
-                        delay: 2000
+                        delay: 4000
                     });
                 }
             },
@@ -117,9 +117,9 @@ class DrinkWater extends Phaser.Scene {
         this.done = false;
 
         // INSTRUCTIONS
-        this.instructionBG = this.add.image(game.config.width/2, game.config.height/2, 'instructionBG')
+        this.instructionBG = this.add.image(game.config.width/2, game.config.height/2, 'drink-instructionBG')
             .setOrigin(0.5, 0.5);
-        this.title = this.add.image(this.instructionBG.x, (3*game.config.height)/10, 'title-text')
+        this.title = this.add.image(this.instructionBG.x, (3*game.config.height)/10, 'drink-title-text')
             .setOrigin(0.5, 0.5);
         this.spaceKey = this.add.sprite(this.instructionBG.x, game.config.height/2 + 25, 'space-text', 0)
             .setScale(0.7, 0.7)

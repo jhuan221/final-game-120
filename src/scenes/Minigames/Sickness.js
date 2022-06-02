@@ -12,9 +12,9 @@ class Sickness extends Phaser.Scene {
     preload() {
         // INSTRUCTIONS
         this.load.image('sick-text', './assets/Sick/Sick_Instructions/Sick_Text.png');
-        this.load.image('instructionBG', './assets/Relax/Relax_Instructions/Instruction_Background.png');
+        this.load.image('sick-instructionBG', './assets/Relax/Relax_Instructions/Instruction_Background.png');
         this.load.spritesheet({
-            key: 'arrows-sheet',
+            key: 'sick-arrows-sheet',
             url: './assets/Relax/Relax_Instructions/Relax_Key_Sheet.png',
             frameConfig: {
                 frameWidth: 304,
@@ -22,7 +22,7 @@ class Sickness extends Phaser.Scene {
             }
         });
         this.load.spritesheet({
-            key: 'space-sheet',
+            key: 'sick-space-sheet',
             url: './assets/Sick/Sick_Instructions/Sick_Space_Sheet.gif',
             frameConfig: {
                 frameWidth: 304,
@@ -76,9 +76,24 @@ class Sickness extends Phaser.Scene {
                 frameHeight: 19
             }
         });
+
+        this.load.audio('fight-audio', './assets/audio/new sound/new_BGM1.wav');
     }
 
-    create() {
+    create(data) {
+        if (data.music) {
+            data.music.stop();
+        }
+
+        this.BG_Audio = this.sound.add(
+            'fight-audio',
+            {
+                volume: 0.2,
+                loop: true
+            }
+        )
+        this.BG_Audio.play();
+
         // PRE CONSTANTS
         this.WHITE_CELL_START_X = game.config.width + 272;
         this.WHITE_CELL_FINAL_X = ((2*game.config.width)/5)-40;
@@ -232,16 +247,16 @@ class Sickness extends Phaser.Scene {
 
         // ANIMATIONS
         this.anims.create({
-            key: 'display-arrows',
+            key: 'sick-display-arrows',
             frameRate: 10,
-            frames: this.anims.generateFrameNumbers('arrows-sheet', { start: 0, end: 11 }),
+            frames: this.anims.generateFrameNumbers('sick-arrows-sheet', { start: 0, end: 11 }),
             repeat: -1
         });
 
         this.anims.create({
-            key: 'display-space',
+            key: 'sick-display-space',
             frameRate: 10,
-            frames: this.anims.generateFrameNumbers('space-sheet', { start: 0, end: 7 }),
+            frames: this.anims.generateFrameNumbers('sick-space-sheet', { start: 0, end: 7 }),
             repeat: -1
         });
 
@@ -276,11 +291,12 @@ class Sickness extends Phaser.Scene {
         // TIME EVENTS
         this.end = this.time.addEvent({
             callback: () => {
-                this.scene.start(this.nextScene, { pg: this.pg });
+                this.BG_Audio.stop();
+                this.scene.start(this.nextScene, { pg: this.pg, music: data.music });
             },
-            delay: 2000
+            delay: 4000,
+            paused: true
         });
-        this.end.paused = true;
 
         this.enemyDefeatedEvent = this.time.addEvent({
             callback: () => {
@@ -358,18 +374,18 @@ class Sickness extends Phaser.Scene {
         });
 
         // INSTRUCTIONS
-        this.instructionBG = this.add.image(game.config.width/2, game.config.height/2, 'instructionBG')
+        this.instructionBG = this.add.image(game.config.width/2, game.config.height/2, 'sick-instructionBG')
             .setOrigin(0.5, 0.5);
         this.title = this.add.image(this.instructionBG.x, (3*game.config.height)/10, 'sick-text')
             .setOrigin(0.5, 0.5);
-        this.arrowKeys = this.add.sprite(this.instructionBG.x, (game.config.height/2) + 25, 'arrows-sheet', 0)
+        this.arrowKeys = this.add.sprite(this.instructionBG.x, (game.config.height/2) + 25, 'sick-arrows-sheet', 0)
             .setScale(0.7, 0.7)
             .setOrigin(0.5, 0.5);
-        this.arrowKeys.play('display-arrows');
-        this.spaceKey = this.add.sprite(this.instructionBG.x, ((7*game.config.height)/10) + 25, 'space-sheet', 0)
+        this.arrowKeys.play('sick-display-arrows');
+        this.spaceKey = this.add.sprite(this.instructionBG.x, ((7*game.config.height)/10) + 25, 'sick-space-sheet', 0)
             .setScale(0.7, 0.7)
             .setOrigin(0.5, 0.5);
-        this.spaceKey.play('display-space');
+        this.spaceKey.play('sick-display-space');
         
         this.instructions = [
             this.instructionBG,
@@ -408,14 +424,13 @@ class Sickness extends Phaser.Scene {
             repeat: 8
         }
 
-        this.end = this.time.addEvent({
-            callback: () => {
-                this.scene.start(this.nextScene, { pg: this.pg });
-            },
-            delay: 2000
-        });
-
-        this.end.paused = true;
+        // this.end = this.time.addEvent({
+        //     callback: () => {
+        //         this.scene.start(this.nextScene, { pg: this.pg });
+        //     },
+        //     delay: 4000,
+        //     paused: true
+        // });
 
     }
 
@@ -513,6 +528,9 @@ class Sickness extends Phaser.Scene {
                     else {
                         this.whiteCellAtkFwd = true;
                         this.dropHealthEvent.paused = false;
+                        this.controls.forEach((elem) => {
+                            elem.enabled = false;
+                        })
                     }
             }
             if ((this.arrow.x == this.PTR_ITEM.x) &&

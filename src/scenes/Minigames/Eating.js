@@ -18,10 +18,10 @@ class Eating extends Phaser.Scene {
 
     preload() {
         // INSTRUCTIONS
-        this.load.image('title-text', './assets/Eating/Eating_Instructions/Eating_Text.png');
-        this.load.image('instructionBG', './assets/Eating/Eating_Instructions/Instruction_Background.png');
+        this.load.image('eat-title-text', './assets/Eating/Eating_Instructions/Eating_Text.png');
+        this.load.image('eat-instructionBG', './assets/Eating/Eating_Instructions/Instruction_Background.png');
         this.load.spritesheet({
-            key: 'space-sheet',
+            key: 'eating-space-sheet',
             url: './assets/Eating/Eating_Instructions/Eating_Space_Sheet.gif',
             frameConfig: {
                 frameWidth: 304,
@@ -42,16 +42,21 @@ class Eating extends Phaser.Scene {
                 frameHeight: 85
             }
         });
+
+        this.load.audio('eating-audio', './assets/audio/new sound/eat.wav');
     }
 
-    create() {
+    create(data) {
+        if (data.music) {
+            data.music.play();
+        }
         // SCENE SETUP
         this.physics.world.gravity.y = 0; // CHANGES TO 200 AFTER INSTRUCTIONS ARE DISPLAYED
         this.scrollspeed = 200;
-        //this.keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
         this.keySPC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.keySPC.enabled = false;
         this.background = this.add.sprite(0, -80, 'eatBG').setOrigin(0,0);
+        this.eatingAudio = this.sound.add('eating-audio', { volume: 0.5 });
 
         // PLAYER SETTINGS
         this.player = this.physics.add.sprite(this.PLAYER_START_X, this.PLAYER_START_Y, 'plane');
@@ -114,9 +119,9 @@ class Eating extends Phaser.Scene {
 
         // ANIMATIONS
         this.anims.create({
-            key: 'display-space',
+            key: 'eating-display-space',
             frameRate: 10,
-            frames: this.anims.generateFrameNumbers('space-sheet', { start: 0, end: 7 }),
+            frames: this.anims.generateFrameNumbers('eating-space-sheet', { start: 0, end: 7 }),
             repeat: -1
         });
 
@@ -136,19 +141,18 @@ class Eating extends Phaser.Scene {
         this.anim.play('eating-anim');
 
         // INSTRUCTIONS
-        this.instructionBG = this.add.image(game.config.width/2, game.config.height/2, 'instructionBG')
+        this.instructionBG = this.add.image(game.config.width/2, game.config.height/2, 'eat-instructionBG')
             .setOrigin(0.5, 0.5);
-        this.title = this.add.image(this.instructionBG.x, (3*game.config.height)/10, 'title-text')
+        this.title = this.add.image(this.instructionBG.x, (3*game.config.height)/10, 'eat-title-text')
             .setOrigin(0.5, 0.5);
-        this.spaceKey = this.add.sprite(this.instructionBG.x, game.config.height/2 + 25, 'space-sheet', 0)
+        this.spaceKey = this.add.sprite(this.instructionBG.x, game.config.height/2 + 25, 'eating-space-sheet', 0)
             .setScale(0.7, 0.7)
             .setOrigin(0.5, 0.5);
-        this.spaceKey.play('display-space');
+        this.spaceKey.play('eating-display-space');
 
         this.instructions = [
             this.instructionBG,
             this.title,
-            //this.arrowKeys,
             this.spaceKey
         ];
 
@@ -186,13 +190,30 @@ class Eating extends Phaser.Scene {
 
         this.displayInstructions = this.time.addEvent(this.displayInstructionsConfig);
 
+        this.progress = 0;
+        this.flightTime = this.time.addEvent({
+            callback: () => {
+                this.progress += 1;
+            },
+            delay: 1000,
+            loop: true
+        });
+
+        this.eatingAudioEvent = this.time.addEvent({
+            callback: () => {
+                this.eatingAudioEvent.play();
+            },
+            paused: true
+        })
+
         this.end = this.time.addEvent({
             callback: () => {
                 this.physics.world.gravity.y = 0;
                 this.keySPC.enabled = false;
-                this.scene.start(this.nextScene, { next: this.nextScene2, pg: this.pg, });
+                this.scene.start(this.nextScene, { next: this.nextScene2, pg: this.pg, main_audio: this.ov_audio });
             },
-            delay: 30000
+            delay: 4000,
+            paused: true
         });
     }
 
@@ -214,12 +235,14 @@ class Eating extends Phaser.Scene {
 
         if (this.player.y > game.config.height + this.player.height ||
             this.player.x < -this.player.width) {
+                this.progress -= 3;
                 this.player.x = this.PLAYER_START_X;
                 this.player.y = this.PLAYER_START_Y;
         }
 
-        // if (Phaser.Input.Keyboard.JustDown(this.keyESC)) {
-        //     this.scene.stop('s_eating').start('s_overview');
-        // }
+        if (this.progress >= 30) {
+            this.eatingAudioEvent.paused = false;
+            this.end.paused = false;
+        }
     }
 }

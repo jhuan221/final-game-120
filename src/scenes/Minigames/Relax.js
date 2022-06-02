@@ -11,10 +11,10 @@ class Relax extends Phaser.Scene {
 
     preload () {
         // INSTRUCTIONS
-        this.load.image('title-text', './assets/Relax/Relax_Instructions/Relax_Text.png');
-        this.load.image('instructionBG', './assets/Relax/Relax_Instructions/Instruction_Background.png');
+        this.load.image('relax-title-text', './assets/Relax/Relax_Instructions/Relax_Text.png');
+        this.load.image('relax-instructionBG', './assets/Relax/Relax_Instructions/Instruction_Background.png');
         this.load.spritesheet({
-            key: 'arrows-sheet',
+            key: 'relax-arrows-sheet',
             url: './assets/Relax/Relax_Instructions/Relax_Key_Sheet.png',
             frameConfig: {
                 frameWidth: 304,
@@ -59,6 +59,20 @@ class Relax extends Phaser.Scene {
     create() {
         // GAME SETUP
         this.background = this.add.sprite(0, 0, 'relaxBG').setOrigin(0,0);
+        this.relaxBGAudio = this.sound.add(
+            'relaxBG-audio',
+            {
+                volume: 0.2,
+                loop: true
+            }
+        );
+        this.relaxBGAudio.play();
+        this.leftAudio = this.sound.add('left-audio', { volume: 0.5 });
+        this.rightAudio = this.sound.add('right-audio', { volume: 0.5 });
+        this.upAudio = this.sound.add('up-audio', { volume: 0.5 });
+        this.downAudio = this.sound.add('down-audio', { volume: 0.5 });
+        this.missAudio = this.sound.add('missed-audio', { volume: 0.5 });
+        this.compAudio = this.sound.add('relax-complete-audio', { volume: 0.5 });
 
         // GAME OBJECTS
         this.bird = this.add.sprite( ((7*game.config.width)/10)-50, (4*game.config.height)/10, 'bird-sheet', 0 )
@@ -126,7 +140,7 @@ class Relax extends Phaser.Scene {
                     }
                 );
             },
-            delay: 500,
+            delay: 450,
             loop: true
         };
 
@@ -138,9 +152,9 @@ class Relax extends Phaser.Scene {
 
         // ANIMATIONS
         this.anims.create({
-            key: 'display-arrows',
+            key: 'relax-display-arrows',
             frameRate: 10,
-            frames: this.anims.generateFrameNumbers('arrows-sheet', { start: 0, end: 11 }),
+            frames: this.anims.generateFrameNumbers('relax-arrows-sheet', { start: 0, end: 11 }),
             repeat: -1
         })
         this.anims.create({
@@ -158,18 +172,14 @@ class Relax extends Phaser.Scene {
         this.anim.play('relax-anim');
 
         // INSTRUCTIONS
-        this.instructionBG = this.add.image(game.config.width/2, game.config.height/2, 'instructionBG')
+        this.instructionBG = this.add.image(game.config.width/2, game.config.height/2, 'relax-instructionBG')
             .setOrigin(0.5, 0.5);
-        this.title = this.add.image(this.instructionBG.x, (3*game.config.height)/10, 'title-text')
+        this.title = this.add.image(this.instructionBG.x, (3*game.config.height)/10, 'relax-title-text')
             .setOrigin(0.5, 0.5);
-        this.arrowKeys = this.add.sprite(this.instructionBG.x, (game.config.height/2) + 25, 'arrows-sheet', 0)
+        this.arrowKeys = this.add.sprite(this.instructionBG.x, (game.config.height/2) + 25, 'relax-arrows-sheet', 0)
             .setScale(0.7, 0.7)
             .setOrigin(0.5, 0.5);
-        this.arrowKeys.play('display-arrows');
-        // this.spaceKey = this.add.sprite(this.instructionBG.x, ((7*game.config.height)/10) + 25, 'space-sheet', 0)
-        //     .setScale(0.7, 0.7)
-        //     .setOrigin(0.5, 0.5);
-        // this.spaceKey.play('display-space');
+        this.arrowKeys.play('relax-display-arrows');
         
         this.instructions = [
             this.instructionBG,
@@ -221,8 +231,21 @@ class Relax extends Phaser.Scene {
         // GAME VARIABLES
         this.score = 0;
 
+        this.endAudio = this.time.addEvent({
+            callback: () => {
+                this.compAudio.play();
+            },
+            paused: true
+        })
         
-        //this.end.paused = true;
+        this.end = this.time.addEvent({
+            callback: () => {
+                this.relaxBGAudio.stop();
+                this.scene.start(this.nextScene, { pg: this.pg });
+            },
+            delay: 4000,
+            paused: true
+        });
     }
 
     update() {
@@ -230,6 +253,7 @@ class Relax extends Phaser.Scene {
             this.arrowArray[i].obj.y -= 3;
             
             if (this.arrowArray[i].obj.y < -100) {
+                this.missAudio.play();
                 this.arrowArray.splice(i, 1);
             }
 
@@ -237,6 +261,7 @@ class Relax extends Phaser.Scene {
                 this.arrowArray[i].obj.y > 25) {
                     if (this.arrowArray[i].id == 'leftArrow' &&
                         Phaser.Input.Keyboard.JustDown(keyLt)) {
+                            this.leftAudio.play();
                             this.arrowArray[i].obj.visible = false;
                             this.arrowArray.splice(i, 1);
                             this.score += 1;
@@ -244,6 +269,7 @@ class Relax extends Phaser.Scene {
 
                     if (this.arrowArray[i].id == 'rightArrow' &&
                         Phaser.Input.Keyboard.JustDown(keyRt)) {
+                            this.rightAudio.play();
                             this.arrowArray[i].obj.visible = false;
                             this.arrowArray.splice(i, 1);
                             this.score += 1;
@@ -251,6 +277,7 @@ class Relax extends Phaser.Scene {
 
                     if (this.arrowArray[i].id == 'upArrow' && 
                         Phaser.Input.Keyboard.JustDown(keyUp)) {
+                            this.upAudio.play();
                             this.arrowArray[i].obj.visible = false;
                             this.arrowArray.splice(i, 1);
                             this.score += 1;
@@ -258,6 +285,7 @@ class Relax extends Phaser.Scene {
 
                     if (this.arrowArray[i].id == 'downArrow' &&
                         Phaser.Input.Keyboard.JustDown(keyDn)) {
+                            this.downAudio.play();
                             this.arrowArray[i].obj.visible = false;
                             this.arrowArray.splice(i, 1);
                             this.score += 1;
@@ -266,14 +294,9 @@ class Relax extends Phaser.Scene {
         }
         
 
-        if (this.score >= 30) {
-            //this.end.paused = false;
-            this.end = this.time.addEvent({
-                callback: () => {
-                    this.scene.start(this.nextScene, { pg: this.pg });
-                },
-                delay: 2000
-            });
+        if (this.score >= 40) {
+            this.endAudio.paused = false;
+            this.end.paused = false;
         }
     }
 }
