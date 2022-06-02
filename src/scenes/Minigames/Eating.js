@@ -43,7 +43,7 @@ class Eating extends Phaser.Scene {
             }
         });
         this.load.spritesheet({
-            key: 'complete-sheet',
+            key: 'eating-complete-sheet',
             url: './assets/Complete_Sheet.png',
             frameConfig: {
                 frameWidth: 665,
@@ -62,10 +62,6 @@ class Eating extends Phaser.Scene {
         this.keySPC.enabled = false;
         this.background = this.add.sprite(0, -80, 'eatBG').setOrigin(0,0);
         this.eatingAudio = this.sound.add('eating-audio', { volume: 0.5 });
-
-        this.completeAnim = this.add.sprite(game.config.width/2, game.config.height/2, 'complete-sheet', 0)
-	        .setOrigin(0.5, 0.5);
-        this.completeAnim.visible = false;
 
         // PLAYER SETTINGS
         this.player = this.physics.add.sprite(this.PLAYER_START_X, this.PLAYER_START_Y, 'plane');
@@ -140,9 +136,9 @@ class Eating extends Phaser.Scene {
             repeat: -1
         });
         this.anims.create({
-            key: 'complete-anim',
+            key: 'eating-complete-anim',
             frameRate: 24,
-            frames: this.anims.generateFrameNumbers('complete-sheet', { start: 0, end: 6 }),
+            frames: this.anims.generateFrameNumbers('eating-complete-sheet', { start: 0, end: 6 }),
             repeat: 0
         });
 
@@ -213,6 +209,19 @@ class Eating extends Phaser.Scene {
             loop: true
         });
 
+        this.completeAnim = this.add.sprite(game.config.width/2, game.config.height/2, 'eating-complete-sheet', 0)
+	        .setOrigin(0.5, 0.5);
+        this.completeAnim.setDepth(100);
+        this.completeAnim.visible = false;
+        this.completeAnim.active = false;
+
+        this.completeEvent = this.time.addEvent({
+            callback: () => {
+                this.completeAnim.play('eating-complete-anim');
+            },
+            paused: true
+        })
+
         this.end = this.time.addEvent({
             callback: () => {
                 this.physics.world.gravity.y = 0;
@@ -248,14 +257,9 @@ class Eating extends Phaser.Scene {
         }
 
         if (this.progress >= 30) {
-            this.completeEvent = this.time.addEvent({
-                callback: () => {
-                    this.completeAnim.visible = true;
-                    this.completeAnim.play('complete-anim');
-                },
-                callbackScope: this,
-                delay: 2000
-            });
+            this.completeAnim.visible = true;
+            this.completeAnim.active = true;
+            this.completeEvent.paused = false;
             this.end.paused = false;
         }
     }

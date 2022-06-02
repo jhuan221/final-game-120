@@ -66,6 +66,7 @@ class DrinkWater extends Phaser.Scene {
             .setOrigin(1, 1);
         this.completeAnim = this.add.sprite(game.config.width/2, game.config.height/2, 'complete-sheet', 0)
             .setOrigin(0.5, 0.5);
+        this.completeAnim.setDepth(100);
         this.completeAnim.visible = false;
 
         // ANIMATIONS

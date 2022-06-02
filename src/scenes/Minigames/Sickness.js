@@ -30,7 +30,7 @@ class Sickness extends Phaser.Scene {
             }
         });
         this.load.spritesheet({
-            key: 'complete-sheet',
+            key: 'sick-complete-sheet',
             url: './assets/Complete_Sheet.png',
             frameConfig: {
                 frameWidth: 665,
@@ -188,8 +188,9 @@ class Sickness extends Phaser.Scene {
             .setScale(0.8, 0.8)
             .setOrigin(0.5, 0.5);
         this.victoryText.visible = false;
-        this.completeAnim = this.add.sprite(game.config.width/2, game.config.height/2, 'complete-sheet', 0)
+        this.completeAnim = this.add.sprite(game.config.width/2, game.config.height/2, 'sick-complete-sheet', 0)
 	        .setOrigin(0.5, 0.5);
+        this.completeAnim.setDepth(100);
         this.completeAnim.visible = false;
         
         // ATTACK UI
@@ -294,9 +295,9 @@ class Sickness extends Phaser.Scene {
             .setOrigin(1, 1);
         this.anim.play('sick-anim');
         this.anims.create({
-            key: 'complete-anim',
+            key: 'sick-complete-anim',
             frameRate: 24,
-            frames: this.anims.generateFrameNumbers('complete-sheet', { start: 0, end: 6 }),
+            frames: this.anims.generateFrameNumbers('sick-complete-sheet', { start: 0, end: 6 }),
             repeat: 0
         });
 
@@ -304,7 +305,7 @@ class Sickness extends Phaser.Scene {
         this.completeEvent = this.time.addEvent({
             callback: () => {
                 this.completeAnim.visible = true;
-                this.completeAnim.play('complete-anim');
+                this.completeAnim.play('sick-complete-anim');
             },
             callbackScope: this,
             delay: 2000,

@@ -43,7 +43,7 @@ class Sleeping extends Phaser.Scene {
             }
         });
         this.load.spritesheet({
-            key: 'complete-sheet',
+            key: 'sleep-complete-sheet',
             url: './assets/Complete_Sheet.png',
             frameConfig: {
                 frameWidth: 665,
@@ -73,8 +73,9 @@ class Sleeping extends Phaser.Scene {
         this.physics.add.collider(this.sheep, this.fence);
         this.physics.add.collider(this.sheep, this.ground);
 
-        this.completeAnim = this.add.sprite(game.config.width/2, game.config.height/2, 'complete-sheet', 0)
+        this.completeAnim = this.add.sprite(game.config.width/2, game.config.height/2, 'sleep-complete-sheet', 0)
 	        .setOrigin(0.5, 0.5);
+        this.completeAnim.setDepth(100);
         this.completeAnim.visible = false;
         
         // GAME LOGIC VARIABLES
@@ -116,9 +117,9 @@ class Sleeping extends Phaser.Scene {
             .setOrigin(1, 1);
         this.anim.play('sleep-anim');
         this.anims.create({
-            key: 'complete-anim',
+            key: 'sleep-complete-anim',
             frameRate: 24,
-            frames: this.anims.generateFrameNumbers('complete-sheet', { start: 0, end: 6 }),
+            frames: this.anims.generateFrameNumbers('sleep-complete-sheet', { start: 0, end: 6 }),
             repeat: 0
         });
 
@@ -178,7 +179,7 @@ class Sleeping extends Phaser.Scene {
         this.completeEvent = this.time.addEvent({
             callback: () => {
                 this.completeAnim.visible = true;
-                this.completeAnim.play('complete-anim');
+                this.completeAnim.play('sleep-complete-anim');
             },
             callbackScope: this,
             delay: 2000,

@@ -40,7 +40,7 @@ class Vomiting extends Phaser.Scene {
             }
         });
         this.load.spritesheet({
-            key: 'complete-sheet',
+            key: 'vomit-complete-sheet',
             url: './assets/Complete_Sheet.png',
             frameConfig: {
                 frameWidth: 665,
@@ -52,8 +52,9 @@ class Vomiting extends Phaser.Scene {
     create() {
         // SCENE SETUP
         this.background = this.add.sprite(0, 0, 'vomitBG').setOrigin(0,0);
-        this.completeAnim = this.add.sprite(game.config.width/2, game.config.height/2, 'complete-sheet', 0)
+        this.completeAnim = this.add.sprite(game.config.width/2, game.config.height/2, 'vomit-complete-sheet', 0)
 	        .setOrigin(0.5, 0.5);
+        this.completeAnim.setDepth(100);
         this.completeAnim.visible = false;
 
         // CONTROLS
@@ -80,9 +81,9 @@ class Vomiting extends Phaser.Scene {
             .setOrigin(1, 1);
         this.anim.play('vomit-anim');
         this.anims.create({
-            key: 'complete-anim',
+            key: 'vomit-complete-anim',
             frameRate: 24,
-            frames: this.anims.generateFrameNumbers('complete-sheet', { start: 0, end: 6 }),
+            frames: this.anims.generateFrameNumbers('vomit-complete-sheet', { start: 0, end: 6 }),
             repeat: 0
         });
 
@@ -145,7 +146,7 @@ class Vomiting extends Phaser.Scene {
         this.completeEvent = this.time.addEvent({
             callback: () => {
                 this.completeAnim.visible = true;
-                this.completeAnim.play('complete-anim');
+                this.completeAnim.play('vomit-complete-anim');
             },
             callbackScope: this,
             delay: 2000,
