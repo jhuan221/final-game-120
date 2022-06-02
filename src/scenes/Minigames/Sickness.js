@@ -292,6 +292,7 @@ class Sickness extends Phaser.Scene {
         this.end = this.time.addEvent({
             callback: () => {
                 this.BG_Audio.stop();
+                data.music.play();
                 this.scene.start(this.nextScene, { pg: this.pg, music: data.music });
             },
             delay: 4000,

@@ -56,9 +56,10 @@ class Relax extends Phaser.Scene {
         this.load.audio('relax-complete-audio', './assets/audio/new sound/Bird Complete.wav');
     }
 
-    create() {
+    create(data) {
         // GAME SETUP
         this.background = this.add.sprite(0, 0, 'relaxBG').setOrigin(0,0);
+        data.music.stop();
         this.relaxBGAudio = this.sound.add(
             'relaxBG-audio',
             {
@@ -241,6 +242,7 @@ class Relax extends Phaser.Scene {
         this.end = this.time.addEvent({
             callback: () => {
                 this.relaxBGAudio.stop();
+                data.music.play();
                 this.scene.start(this.nextScene, { pg: this.pg });
             },
             delay: 4000,
