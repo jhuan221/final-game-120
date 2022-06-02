@@ -90,7 +90,7 @@ class Overview extends Phaser.Scene {
             callback: () => {
                 game.config.HEALTH += 1;
             },
-            delay: 1000,
+            delay: 16600,
             loop: true
         });
 
@@ -123,19 +123,23 @@ class Overview extends Phaser.Scene {
             .on('pointerdown', () => {
                 this.goToNextScene(this.startScene, this.nextScene, this.nextScene2, this.BG_Audio);
             }, this);
-            this.taskBtn.play('task-anim');
+        this.taskBtn.play('task-anim');
         
     }
 
     update() {
         if (game.config.GRADER)
             this.healthTime.paused = true;
+        if (game.config.INGAME)
+            this.input.activePointer.enabled = false;
+            
         if (game.config.HEALTH < 18)
             this.healthbar.setFrame(game.config.HEALTH, false, false);
         if (game.config.HEALTH == 17) 
             this.healthCritical.paused = false;
         if (game.config.HEALTH > 17) {
             this.BG_Audio.stop();
+            data.music.play();
             this.scene.start('s_gameover');
         }
             
@@ -241,11 +245,15 @@ class Overview extends Phaser.Scene {
     }
 
     goToNextScene(start, nextScene, nextScene2) {
+        game.config.INGAME = true;
+        this.taskBtn.visible = false;
+        this.taskBtn.active = false;
         this.scene.launch(start, { 
             next: nextScene, 
             next2: nextScene2,
             pg: 1, 
-            music: this.BG_Audio
+            music: this.BG_Audio,
+            inScene: true
         });
     }
 }

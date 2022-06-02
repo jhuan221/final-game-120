@@ -55,6 +55,7 @@ class DrinkWater extends Phaser.Scene {
 
     create() {
         keySp = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        this.input.activePointer.enabled = false;
 
         this.bg = this.add.sprite(0, -80, 'BG', 0)
             .setOrigin(0, 0);

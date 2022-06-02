@@ -35,6 +35,7 @@ let game = new Phaser.Game(config);
 
 game.config.HEALTH = 0;
 game.config.GRADER = false;
+game.config.INGAME = false;
 
 let keyG, keyLt, keyRt, keyUp, keyDn, keySp, keyEnter, keyM, keyR;
 
