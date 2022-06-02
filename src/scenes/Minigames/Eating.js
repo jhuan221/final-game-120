@@ -199,13 +199,6 @@ class Eating extends Phaser.Scene {
             loop: true
         });
 
-        this.eatingAudioEvent = this.time.addEvent({
-            callback: () => {
-                this.eatingAudioEvent.play();
-            },
-            paused: true
-        })
-
         this.end = this.time.addEvent({
             callback: () => {
                 this.physics.world.gravity.y = 0;
@@ -241,7 +234,6 @@ class Eating extends Phaser.Scene {
         }
 
         if (this.progress >= 30) {
-            this.eatingAudioEvent.paused = false;
             this.end.paused = false;
         }
     }
