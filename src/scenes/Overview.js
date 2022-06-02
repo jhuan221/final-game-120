@@ -80,6 +80,10 @@ class Overview extends Phaser.Scene {
         this.healthTime = this.time.addEvent({
             callback: () => {
                 this.HEALTH += 1;
+                if (this.HEALTH > 17) {
+                    this.BG_Audio.stop();
+                    this.scene.start('s_gameover');
+                }
             },
             delay: 16600,
             loop: true
