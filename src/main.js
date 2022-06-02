@@ -21,14 +21,14 @@ let config = {
         Overview,
         Game_Over,
         Medicine,
-         DrinkWater,
+        DrinkWater,
         Sickness,
         Relax,
         Vomiting,
         Eating,
         Sleeping, 
         Final
-    ]
+    ],
 }
 
 let game = new Phaser.Game(config);
