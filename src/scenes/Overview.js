@@ -160,7 +160,7 @@ class Overview extends Phaser.Scene {
     }
 
     update() {
-        console.log(game.config.PROG);
+        // console.log(game.config.PROG);
         if (game.config.GRADER)
             this.healthTime.paused = true;
         if (game.config.INGAME)
