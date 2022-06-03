@@ -90,7 +90,7 @@ class Overview extends Phaser.Scene {
             callback: () => {
                 game.config.HEALTH += 1;
             },
-            delay: 16600,
+            delay: 25000,
             loop: true
         });
 
