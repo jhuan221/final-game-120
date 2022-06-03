@@ -226,7 +226,7 @@ class Eating extends Phaser.Scene {
             callback: () => {
                 this.physics.world.gravity.y = 0;
                 this.keySPC.enabled = false;
-                this.scene.start(this.nextScene, { next: this.nextScene2, pg: this.pg, main_audio: this.ov_audio });
+                this.scene.stop(this);
             },
             delay: 4000,
             paused: true

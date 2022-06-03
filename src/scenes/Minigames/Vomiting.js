@@ -155,7 +155,7 @@ class Vomiting extends Phaser.Scene {
 
         this.end = this.time.addEvent({
             callback: () => {
-                this.scene.start(this.nextScene, { pg: this.pg });
+                this.scene.stop(this);
             },
             delay: 4000,
             paused: true
@@ -174,10 +174,12 @@ class Vomiting extends Phaser.Scene {
                 this.counter = 0;
                 break;
         }
-        if (this.frame == -1) {
+        if (this.frame < 0) {
             this.completeEvent.paused = false;
             this.end.paused = false;
         }
-        this.vpipe.setFrame(this.frame, false, false);
+        else {
+            this.vpipe.setFrame(this.frame, false, false);
+        }
     }
 }

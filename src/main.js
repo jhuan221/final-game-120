@@ -34,6 +34,7 @@ let config = {
 let game = new Phaser.Game(config);
 
 game.config.HEALTH = 0;
+game.config.PROG = 20;
 game.config.GRADER = false;
 game.config.INGAME = false;
 

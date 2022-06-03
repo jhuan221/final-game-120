@@ -130,7 +130,7 @@ class DrinkWater extends Phaser.Scene {
                     });
                     this.end = this.time.addEvent({
                         callback: () => {
-                            this.scene.start(this.nextScene, { pg: this.pg });
+                            this.scene.stop(this);
                         },
                         callbackScope: this,
                         delay: 4000

@@ -262,7 +262,7 @@ class Relax extends Phaser.Scene {
             callback: () => {
                 this.relaxBGAudio.stop();
                 data.music.play();
-                this.scene.start(this.nextScene, { pg: this.pg });
+                this.scene.stop(this);
             },
             delay: 4000,
             paused: true

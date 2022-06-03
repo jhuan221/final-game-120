@@ -182,7 +182,6 @@ class Sleeping extends Phaser.Scene {
                 this.completeAnim.play('sleep-complete-anim');
             },
             callbackScope: this,
-            delay: 2000,
             paused: true
         });
     }
@@ -202,9 +201,9 @@ class Sleeping extends Phaser.Scene {
                 this.completeEvent.paused = false;
                 this.end = this.time.addEvent({
                     callback: () => {
-                        this.scene.start(this.nextScene, { pg: this.pg });
+                        this.scene.stop(this);
                     },
-                    delay: 4000
+                    delay: 2000
                 })
         }
         if (this.keySPC.isDown && this.sheep.body.touching.down) {

@@ -226,7 +226,7 @@ class Medicine extends Phaser.Scene {
 
         this.end = this.time.addEvent({
             callback: () => {
-                this.scene.start('s_overview', { pg: this.pg });
+                this.scene.stop(this);
             },
             delay: 4000,
             paused: true
