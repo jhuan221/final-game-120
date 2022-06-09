@@ -44,9 +44,15 @@ class Game_Over extends Phaser.Scene {
 
         // checking for player input
         if(Phaser.Input.Keyboard.JustDown(keyM)){
+            game.config.HEALTH = 0;
+            game.config.PROG = 0;
+            game.config.GRADER = false;
+            game.config.INGAME = false;
             this.scene.start('s_menu');
         }
         if(Phaser.Input.Keyboard.JustDown(keyR)){
+            game.config.HEALTH = 0;
+            game.config.PROG = 0;
             this.scene.start('s_overview');
             // need to implement to switch to overview and make sure things are resetted
             //console.log('restart and switch back to overview');
