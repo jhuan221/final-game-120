@@ -172,7 +172,7 @@ class Overview extends Phaser.Scene {
             this.healthCritical.paused = false;
         if (game.config.HEALTH > 17) {
             this.BG_Audio.stop();
-            data.music.play();
+            //data.music.play();
             this.scene.start('s_gameover');
         }
             
